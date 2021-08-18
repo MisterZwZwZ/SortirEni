@@ -18,7 +18,7 @@ class SortiesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sorties::class);
     }
-    
+
 
     // /**
     //  * @return SortiesFixtures[] Returns an array of SortiesFixtures objects
