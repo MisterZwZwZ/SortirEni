@@ -57,62 +57,80 @@ class SortieType extends AbstractType
             'required' => false,
         ]);
 
-//        $builder->add('campus', EntityType::class, [
-//            'label' => 'Campus:',
-//            'mapped' => true,
-//            'class' => Campus::class,
-//            'query_builder' => function (CampusRepository $campusRepository){
-//            return $campusRepository->createQueryBuilder('campus')
-//                ->orderBy('campus.nomCampus', 'ASC');
-//            },
-//        ]);
+        $builder->add('campus', EntityType::class,[
+            'label'=>'Campus',
+            'required'=>false,
+            'class'=> Campus::class,
+            'query_builder'=> function (CampusRepository $campusRepository){
+                return $campusRepository->createQueryBuilder('campus')
+                    ->orderBy('campus.nomCampus','ASC');
 
-//        $builder->add('ville', ChoiceType::class, [
-//            'label' => 'Ville:',
-//            'choices' => [
-//                'Choix 1' => 1,
-//                'Choix 2' => 2,
-//                'Choix 3' => 3,
-//                'Choix 4' => 4,
-//            ]
-//        ]);
-//
-//        $builder->add('lieu', ChoiceType::class, [
-//            'label' => 'Lieu:',
-//            'choices' => [
-//                'Choix 1' => 1,
-//                'Choix 2' => 2,
-//                'Choix 3' => 3,
-//                'Choix 4' => 4,
-//            ]
-//        ]);
-//
-//        $builder->add('ajoutLieu', SubmitType::class, [
-//            'label' => '+',
-//        ]);
-//
-//        $builder->add('rue', TextType::class, [
-//            'label' => 'Rue:',
-//            'trim' => true,
-//            'data' => 'Rue de l\'utilisateur',
-//            'disabled' => true,
-//        ]);
-//
-//        $builder->add('codePostal', TextType::class, [
-//            'label' => 'Code Postal:',
-//            'trim' => true,
-//            'data' => 'CP de l\'utilisateur',
-//            'disabled' => true,
-//        ]);
-//
-//        $builder->add('latitude', TextType::class, [
-//            'label' => 'Latitude:',
-//            'trim' => true,
-//        ]);
-//
-//        $builder->add('longitude', TextType::class, [
-//            'label' => 'Longitude:',
-//            'trim' => true,
-//        ]);
+            },
+            'choice_label'=>'nomCampus',
+            'mapped'=>false,
+
+        ]);
+
+        $builder->add('ville', EntityType::class,[
+            'label'=>'Campus',
+            'required'=>false,
+            'class'=> Villes::class,
+            'query_builder'=> function (CampusRepository $campusRepository){
+                return $campusRepository->createQueryBuilder('campus')
+                    ->orderBy('campus.nomCampus','ASC');
+
+            },
+            'choice_label'=>'nomCampus',
+            'mapped'=>false,
+
+        ]);
+
+        $builder->add('ville', ChoiceType::class, [
+            'label' => 'Ville:',
+            'choices' => [
+                'Choix 1' => 1,
+                'Choix 2' => 2,
+                'Choix 3' => 3,
+                'Choix 4' => 4,
+            ]
+        ]);
+
+        $builder->add('lieu', ChoiceType::class, [
+            'label' => 'Lieu:',
+            'choices' => [
+                'Choix 1' => 1,
+                'Choix 2' => 2,
+                'Choix 3' => 3,
+                'Choix 4' => 4,
+            ]
+        ]);
+
+        $builder->add('ajoutLieu', SubmitType::class, [
+            'label' => '+',
+        ]);
+
+        $builder->add('rue', TextType::class, [
+            'label' => 'Rue:',
+            'trim' => true,
+            'data' => 'Rue de l\'utilisateur',
+            'disabled' => true,
+        ]);
+
+        $builder->add('codePostal', TextType::class, [
+            'label' => 'Code Postal:',
+            'trim' => true,
+            'data' => 'CP de l\'utilisateur',
+            'disabled' => true,
+        ]);
+
+        $builder->add('latitude', TextType::class, [
+            'label' => 'Latitude:',
+            'trim' => true,
+        ]);
+
+        $builder->add('longitude', TextType::class, [
+            'label' => 'Longitude:',
+            'trim' => true,
+        ]);
     }
 }
