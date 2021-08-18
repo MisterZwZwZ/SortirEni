@@ -15,15 +15,14 @@ class Campus
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+
     private int $idCampus;
-
-
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $nomCampus;
 
+    private ?string $nomCampus;
 
     /**
      * @return int|null
@@ -36,6 +35,7 @@ class Campus
     /**
      * @return string|null
      */
+
     public function getNomCampus(): ?string
     {
         return $this->nomCampus;
@@ -44,9 +44,9 @@ class Campus
     /**
      * @param string $nomCampus
      */
+
     public function setNomCampus(string $nomCampus): void
     {
         $this->nomCampus = $nomCampus;
-
     }
 }

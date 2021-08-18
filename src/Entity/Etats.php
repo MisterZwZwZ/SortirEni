@@ -15,11 +15,6 @@ class Etats
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $idEtat;
 
     /**
@@ -27,21 +22,9 @@ class Etats
      */
     private $libelle;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getIdEtat(): ?int
     {
         return $this->idEtat;
-    }
-
-    public function setIdEtat(int $idEtat): self
-    {
-        $this->idEtat = $idEtat;
-
-        return $this;
     }
 
     public function getLibelle(): ?string

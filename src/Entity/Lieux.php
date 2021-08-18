@@ -15,11 +15,6 @@ class Lieux
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $idLieu;
 
     /**
@@ -42,21 +37,9 @@ class Lieux
      */
     private $longitude;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getIdLieu(): ?int
     {
         return $this->idLieu;
-    }
-
-    public function setIdLieu(int $idLieu): self
-    {
-        $this->idLieu = $idLieu;
-
-        return $this;
     }
 
     public function getNom(): ?string

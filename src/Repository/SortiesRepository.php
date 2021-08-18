@@ -23,7 +23,7 @@ class SortiesRepository extends ServiceEntityRepository
 
         $this->createQueryBuilder('sortie')
             //sorties dont idOrganisateur = idUser
-            ->where(id)
+            ->where(id);
             //sorties je suis inscrite
             //sorties auxquelles je ne suis pas inscrites
             //sorties passées

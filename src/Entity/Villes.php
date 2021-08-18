@@ -15,11 +15,6 @@ class Villes
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $idVille;
 
     /**
@@ -32,21 +27,9 @@ class Villes
      */
     private $codePostal;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getIdVille(): ?int
     {
         return $this->idVille;
-    }
-
-    public function setIdVille(int $idVille): self
-    {
-        $this->idVille = $idVille;
-
-        return $this;
     }
 
     public function getNom(): ?string
