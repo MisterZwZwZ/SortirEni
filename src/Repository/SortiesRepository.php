@@ -19,16 +19,7 @@ class SortiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sorties::class);
     }
 
-    public function findBySelections(){
 
-        $this->createQueryBuilder('sortie')
-            //sorties dont idOrganisateur = idUser
-            ->where(id);
-            //sorties je suis inscrite
-            //sorties auxquelles je ne suis pas inscrites
-            //sorties passées
-
-    }
     // /**
     //  * @return SortiesFixtures[] Returns an array of SortiesFixtures objects
     //  */

@@ -64,7 +64,7 @@ class DefaultController extends AbstractController
     public function desinscription():Response
     {
         //TODO faire la méthode d'inscription dès réalisation des relations
-        return $this->render('default_accueil');
+        return $this->render('default/accueil.html.twig');
     }
 
 }
