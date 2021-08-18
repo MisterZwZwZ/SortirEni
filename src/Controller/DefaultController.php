@@ -22,12 +22,6 @@ class DefaultController extends AbstractController
     {
         $sorties = new Sorties();
 
-//        //récupération des données de la requete
-//        if($request->get('sorties') !== null){
-//            $sorties = $request->get('sorties') ;
-//        }
-
-
         //création du formulaire
         $formSortie = $this->createForm('App\Form\RechercheSortiesType',$sorties,);
 
@@ -52,4 +46,25 @@ class DefaultController extends AbstractController
             'listeSorties'=>$listeSorties,
     ]);
     }
+
+    /**
+     * @return Response
+     * @Route(path="inscription", name="inscription")
+     */
+    public function incription():Response
+    {
+        //TODO faire la méthode d'inscription dès réalisation des relations
+        return $this->redirectToRoute('default_accueil');
+    }
+
+    /**
+     * @Route(path="desinscription", name="desinscription")
+     * @return Response
+     */
+    public function desinscription():Response
+    {
+        //TODO faire la méthode d'inscription dès réalisation des relations
+        return $this->render('default_accueil');
+    }
+
 }

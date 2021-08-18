@@ -23,21 +23,35 @@
             </tr>
         </thead>
         <tbody>
+        {% for sorties in listeSorties %}
             <tr>
-                {% for sorties in listeSorties %}
+
                 <td>{{ sorties.nom }}</td>
                 <td>{{ sorties.dateHeureDebut|date('m/d/y')}}</td>
                 <td>{{ sorties.dateLimiteInscription|date('m/d/y') }}</td>
                 <td>{{ sorties.inscrit | length }}/{{ sorties.nbIncriptionsMax }}</td>
                 <td>{{ sorties.etat }}</td>
-                    inscrit true /false
+                <td></td>
+                    //TODO inscrit true /false
                 <td>{{ sorties.idOrganisateur}}</td>
+{#                //TODO récupérer les nom des organisateurs#}
+                <td>
+                        {#  les actions #}
+{#                    {% if sorties.idOrganisateur === user.id  %}#}
+                        <a href="#">s'incrire -</a>
+                        <a href="#">se désinscrire -</a>
+                        <a href="#">modifier -</a>
+                        <a href="#">annuler -</a>
+                        <a href="#">afficher</a>
+{#                    {% endif %}#}
+                </td>
 
 
 
 
-                {% endfor %}
+
             </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>
