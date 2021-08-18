@@ -15,44 +15,38 @@ class Campus
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $idCampus;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idCampus;
+
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private ?string $nomCampus;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
+    /**
+     * @return int|null
+     */
     public function getIdCampus(): ?int
     {
         return $this->idCampus;
     }
 
-    public function setIdCampus(int $idCampus): self
+    /**
+     * @return string|null
+     */
+    public function getNomCampus(): ?string
     {
-        $this->idCampus = $idCampus;
-
-        return $this;
+        return $this->nomCampus;
     }
 
-    public function getNom(): ?string
+    /**
+     * @param string $nomCampus
+     */
+    public function setNomCampus(string $nomCampus): void
     {
-        return $this->nom;
-    }
+        $this->nomCampus = $nomCampus;
 
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
     }
 }

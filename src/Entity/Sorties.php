@@ -3,7 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\SortiesRepository;
+
+
+
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Array_;
+
 
 /**
  * @ORM\Entity(repositoryClass=SortiesRepository::class)
@@ -14,181 +20,230 @@ class Sorties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\Column(type="integer")
+     * @var int
      */
     private $idSortie;
 
+
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private ?string $nom;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var DateTime
      */
-    private $dateHeureDebut;
+    private ?DateTime $dateHeureDebut;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="datetime")
+     * @var DateTime
      */
-    private $duree;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $dateLimiteInscription;
+    private ?DateTime $dateLimiteInscription;
 
     /**
      * @ORM\Column(type="integer")
+     * @var int|null
      */
-    private $nbIncriptionsMax;
+    private int $duree;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="integer")
+     * @var int|null
      */
-    private $infosSortie;
+    private ?int $nbIncriptionsMax;
+
+    /**
+     * @ORM\Column(type="text", nullable=true, length=500)
+     * @var string|null
+     */
+    private ?string $infosSortie;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string|null
      */
-    private $etat;
+    private ?string $etat;
 
     /**
      * @ORM\Column(type="integer")
+     * @var int | null
      */
-    private $organisateur;
+    private int $idOrganisateur;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var array|null
+     * @ORM\Column(type="array")
      */
-    private $inscrit;
+    private ?array $inscrit;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
-    public function getIdSortie(): ?int
+    /**
+     * @return int
+     */
+    public function getIdSortie(): int
     {
         return $this->idSortie;
     }
 
-    public function setIdSortie(int $idSortie): self
-    {
-        $this->idSortie = $idSortie;
-
-        return $this;
-    }
-
+    /**
+     * @return string|null
+     */
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    /**
+     * @param string|null $nom
+     */
+    public function setNom(?string $nom): void
     {
         $this->nom = $nom;
-
-        return $this;
     }
 
-    public function getDateHeureDebut(): ?\DateTimeInterface
+    /**
+     * @return DateTime
+     */
+    public function getDateHeureDebut(): ?DateTime
     {
         return $this->dateHeureDebut;
     }
 
-    public function setDateHeureDebut(\DateTimeInterface $dateHeureDebut): self
+    /**
+     * @param DateTime $dateHeureDebut
+     */
+    public function setDateHeureDebut(?DateTime $dateHeureDebut): void
     {
         $this->dateHeureDebut = $dateHeureDebut;
-
-        return $this;
     }
 
-    public function getDuree(): ?\DateTimeInterface
-    {
-        return $this->duree;
-    }
-
-    public function setDuree(\DateTimeInterface $duree): self
-    {
-        $this->duree = $duree;
-
-        return $this;
-    }
-
-    public function getDateLimiteInscription(): ?\DateTimeInterface
+    /**
+     * @return DateTime
+     */
+    public function getDateLimiteInscription(): ?DateTime
     {
         return $this->dateLimiteInscription;
     }
 
-    public function setDateLimiteInscription(\DateTimeInterface $dateLimiteInscription): self
+    /**
+     * @param DateTime $dateLimiteInscription
+     */
+    public function setDateLimiteInscription(?DateTime $dateLimiteInscription): void
     {
         $this->dateLimiteInscription = $dateLimiteInscription;
-
-        return $this;
     }
 
+    /**
+     * @return int|null
+     */
+    public function getDuree()
+    {
+        return $this->duree;
+    }
+
+    /**
+     * @param int|null $duree
+     *
+     */
+    public function setDuree(?int $duree): void
+    {
+        $this->duree = $duree;
+    }
+
+    /**
+     * @return int|null
+     */
     public function getNbIncriptionsMax(): ?int
     {
         return $this->nbIncriptionsMax;
     }
 
-    public function setNbIncriptionsMax(int $nbIncriptionsMax): self
+    /**
+     * @param int|null $nbIncriptionsMax
+     */
+    public function setNbIncriptionsMax(?int $nbIncriptionsMax): void
     {
         $this->nbIncriptionsMax = $nbIncriptionsMax;
-
-        return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getInfosSortie(): ?string
     {
         return $this->infosSortie;
     }
 
-    public function setInfosSortie(?string $infosSortie): self
+    /**
+     * @param string|null $infosSortie
+     */
+    public function setInfosSortie(?string $infosSortie): void
     {
         $this->infosSortie = $infosSortie;
-
-        return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEtat(): ?string
     {
         return $this->etat;
     }
 
-    public function setEtat(string $etat): self
+    /**
+     * @param string|null $etat
+     */
+    public function setEtat(?string $etat): void
     {
         $this->etat = $etat;
-
-        return $this;
     }
 
-    public function getOrganisateur(): ?int
+    /**
+     * @return int|null
+     */
+    public function getIdOrganisateur(): ?int
     {
-        return $this->organisateur;
+        return $this->idOrganisateur;
     }
 
-    public function setOrganisateur(int $organisateur): self
+    /**
+     * @param int|null $idOrganisateur
+     */
+    public function setIdOrganisateur(?int $idOrganisateur): void
     {
-        $this->organisateur = $organisateur;
-
-        return $this;
+        $this->idOrganisateur = $idOrganisateur;
     }
 
-    public function getInscrit(): ?int
+    /**
+     * @return array|null
+     */
+    public function getInscrit(): ?array
     {
         return $this->inscrit;
     }
 
-    public function setInscrit(int $inscrit): self
+    /**
+     * @param array|null $inscrit
+     */
+    public function setInscrit(?array $inscrit): void
     {
         $this->inscrit = $inscrit;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
 }
+
+

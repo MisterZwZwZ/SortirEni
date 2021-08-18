@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}Hello DefaultControlleradazda!
+<div>
+    Filter les sorties
+</div>
+<div>
+    {{ form_start(form_accueil) }}
+    {{ form_end(form_accueil) }}
+</div>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture</th>
+                <th>Inscrits/Places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for sorties in listeSorties %}
+                <td>{{ sorties.nom }}</td>
+                <td>{{ sorties.dateHeureDebut|date('m/d/y')}}</td>
+                <td>{{ sorties.dateLimiteInscription|date('m/d/y') }}</td>
+                <td>{{ sorties.inscrit | length }}/{{ sorties.nbIncriptionsMax }}</td>
+                <td>{{ sorties.etat }}</td>
+                    inscrit true /false
+                <td>{{ sorties.idOrganisateur}}</td>
+
+
+
+
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <button type="button"><a href="creer_une_sortie">Créer sortie</a></button>
+</div>
+
+{% endblock body%}
+
