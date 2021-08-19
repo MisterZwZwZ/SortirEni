@@ -1,11 +1,6 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-<<<<<<< HEAD
     form_themes: [ 'bootstrap_5_layout.html.twig' ]
-
-=======
-    form_themes: ['bootstrap_5_layout.html.twig']
->>>>>>> fce30e9 (ajout champ campus formulaire inscription + ajout messages flash + liens redirection header + page mon profil)
 when@test:
     twig:
         strict_variables: true
