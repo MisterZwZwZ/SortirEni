@@ -68,15 +68,11 @@ class ProfilType extends AbstractType
                 ]
             ])
 
-            ->add('actif', CheckboxType::class, [
-                'label' => 'Membre actif',
-                'required' => false,
-                'attr' => ['checked' => 'true'],
-            ])
-
-            //TODO ajouter relation Campus
-            ->add('campus',EntityType::class, [
+            ->add('campusUser',EntityType::class, [
                 'class'  => Campus::class,
+                'choice_label' => 'nomCampus',
+                'label' => 'Campus : ',
+                'required' => true,
                 'expanded' => false,
                 'multiple' => false,
             ])

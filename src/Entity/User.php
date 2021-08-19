@@ -29,6 +29,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=30, unique=true)
      * @Assert\NotBlank(message="L'email est requis !", groups={"register"})
      * @Assert\Email(message="L'email est invalide !", groups={"register"})
+     * @Assert\Regex(
+     *     pattern="#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",
+     *     message="Format d'email invalide",
+     *     groups={"register"}
+     * )
      */
     private $email;
 
@@ -125,11 +130,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->SortiesInscrites = new ArrayCollection();
         $this->listeSortiesOrganisees = new ArrayCollection();
     }
-
-
-
-
-    //TODO ajouter relation Campus
 
     public function getId(): ?int
     {

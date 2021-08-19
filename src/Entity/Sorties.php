@@ -63,6 +63,7 @@ class Sorties
      */
     private ?string $infosSortie;
 
+
     /**
      * @ORM\ManyToMany(targetEntity=User::class,
      *     mappedBy="SortiesInscrites", cascade={"persist"})
@@ -210,6 +211,7 @@ class Sorties
     {
         $this->infosSortie = $infosSortie;
     }
+
 
     public function getDescription(): ?string
     {
