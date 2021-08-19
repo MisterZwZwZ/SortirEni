@@ -7,6 +7,8 @@ use App\Repository\SortiesRepository;
 
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Array_;
 
@@ -22,7 +24,7 @@ class Sorties
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $idSortie;
+    private $id;
 
 
     /**
@@ -67,17 +69,47 @@ class Sorties
      */
     private ?string $etat;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @var int | null
-     */
-    private int $idOrganisateur;
 
     /**
-     * @var array|null
-     * @ORM\Column(type="array")
+     * @ORM\ManyToMany(targetEntity=User::class,
+     *     mappedBy="SortiesInscrites", cascade={"persist"})
+     *
+     *
+     * ensemble des id des participants inscrits
      */
-    private ?array $inscrit;
+    private Collection $listeDesInscrits;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class,
+     *     inversedBy="listeSortiesOrganisees")
+     *@ORM\JoinColumn()
+     *
+     */
+    private User $organisateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="sortiesRattacheesCampus")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $siteOrganisateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lieux::class, inversedBy="sortiesRattacheesLieu")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lieu;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Etats::class, inversedBy="sortiesRattacheesEtat")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $etatSortie;
+
+    public function __construct()
+    {
+        $this->listeDesInscrits = new ArrayCollection();
+    }
+
 
 
     /**
@@ -85,7 +117,7 @@ class Sorties
      */
     public function getIdSortie(): int
     {
-        return $this->idSortie;
+        return $this->id;
     }
 
     /**
@@ -201,37 +233,6 @@ class Sorties
         $this->etat = $etat;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getIdOrganisateur(): ?int
-    {
-        return $this->idOrganisateur;
-    }
-
-    /**
-     * @param int|null $idOrganisateur
-     */
-    public function setIdOrganisateur(?int $idOrganisateur): void
-    {
-        $this->idOrganisateur = $idOrganisateur;
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getInscrit(): ?array
-    {
-        return $this->inscrit;
-    }
-
-    /**
-     * @param array|null $inscrit
-     */
-    public function setInscrit(?array $inscrit): void
-    {
-        $this->inscrit = $inscrit;
-    }
 
     public function getDescription(): ?string
     {
@@ -244,6 +245,85 @@ class Sorties
 
         return $this;
     }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getListeDesInscrits(): Collection
+    {
+        return $this->listeDesInscrits;
+    }
+
+    public function addListeDesInscrit(User $listeDesInscrit): self
+    {
+        if (!$this->listeDesInscrits->contains($listeDesInscrit)) {
+            $this->listeDesInscrits[] = $listeDesInscrit;
+            $listeDesInscrit->addSortiesInscrite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListeDesInscrit(User $listeDesInscrit): self
+    {
+        if ($this->listeDesInscrits->removeElement($listeDesInscrit)) {
+            $listeDesInscrit->removeSortiesInscrite($this);
+        }
+
+        return $this;
+    }
+
+    public function getOrganisateur(): ?User
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?User $organisateur): self
+    {
+        $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    public function getSiteOrganisateur(): ?Campus
+    {
+        return $this->siteOrganisateur;
+    }
+
+    public function setSiteOrganisateur(?Campus $siteOrganisateur): self
+    {
+        $this->siteOrganisateur = $siteOrganisateur;
+
+        return $this;
+    }
+
+    public function getLieu(): ?Lieux
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieux $lieu): self
+    {
+        $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    public function getEtatSortie(): ?Etats
+    {
+        return $this->etatSortie;
+    }
+
+    public function setEtatSortie(?Etats $etatSortie): self
+    {
+        $this->etatSortie = $etatSortie;
+
+        return $this;
+    }
+
+
+
+
 }
 
 

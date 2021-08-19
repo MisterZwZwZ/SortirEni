@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VillesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +17,7 @@ class Villes
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $idVille;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -27,9 +29,21 @@ class Villes
      */
     private $codePostal;
 
-    public function getIdVille(): ?int
+    /**
+     * @ORM\OneToMany(targetEntity=Lieux::class,
+     *      mappedBy="ville"
+     *     )
+     */
+    private Collection $lieuxRattaches;
+
+    public function __construct()
     {
-        return $this->idVille;
+        $this->lieuxRattaches = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getNom(): ?string
@@ -52,6 +66,36 @@ class Villes
     public function setCodePostal(int $codePostal): self
     {
         $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Lieux[]
+     */
+    public function getLieuxRattaches(): Collection
+    {
+        return $this->lieuxRattaches;
+    }
+
+    public function addLieuxRattach(Lieux $lieuxRattach): self
+    {
+        if (!$this->lieuxRattaches->contains($lieuxRattach)) {
+            $this->lieuxRattaches[] = $lieuxRattach;
+            $lieuxRattach->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLieuxRattach(Lieux $lieuxRattach): self
+    {
+        if ($this->lieuxRattaches->removeElement($lieuxRattach)) {
+            // set the owning side to null (unless already changed)
+            if ($lieuxRattach->getVille() === $this) {
+                $lieuxRattach->setVille(null);
+            }
+        }
 
         return $this;
     }
