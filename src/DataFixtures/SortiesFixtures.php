@@ -11,10 +11,17 @@ use App\Entity\Villes;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class SortiesFixtures extends Fixture
 {
+    protected UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher){
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -53,7 +60,7 @@ class SortiesFixtures extends Fixture
             $users[$l]->setPseudo($faker->userName);
             $users[$l]->setTelephone($faker->phoneNumber);
             $users[$l]->setEmail($faker->email);
-            $users[$l]->setPassword($faker->password);
+            $users[$l]->setPassword($this->passwordHasher->hashPassword($users[$l],'Test123!'));
             $users[$l]->setActif(true);
             $users[$l]->setCampusUser($campus[rand(0,2)]);
             $manager->persist($users[$l]);
