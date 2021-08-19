@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -45,7 +47,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string|null The hashed password
      *
      * @Assert\NotBlank(message="Le mot de passe est requis !", groups={"register"})
-     * @Assert\Length(min=8, max=50, minMessage="Le mot de passe doit contenir au minimum {{ limit }} caractères", maxMessage="Le mot de passe doit contenir au maximum {{ limit }} caractères", groups={"register"})
+     * @Assert\Length(min=8, max=50, minMessage="Le mot de passe doit contenir au minimum {{ limit }} caractères",
+     *     maxMessage="Le mot de passe doit contenir au maximum {{ limit }} caractères", groups={"register"})
      */
     private $plainPassword;
 
@@ -53,7 +56,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=30)
      *
      * @Assert\NotBlank(message="Le nom est requis !", groups={"register"})
-     * @Assert\Length(min=2, max=50, minMessage="Le nom doit contenir au minimum {{ limit }} caractères", maxMessage="Le nom doit contenir au maximum {{ limit }} caractères", groups={"register"})
+     * @Assert\Length(min=2, max=50, minMessage="Le nom doit contenir au minimum {{ limit }} caractères",
+     *     maxMessage="Le nom doit contenir au maximum {{ limit }} caractères", groups={"register"})
      *
      */
     private $nom;
@@ -62,7 +66,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=30)
      *
      * @Assert\NotBlank(message="Le prenom est requis !", groups={"register"})
-     * @Assert\Length(min=2, max=50, minMessage="Le prenom doit contenir au minimum {{ limit }} caractères", maxMessage="Le prenom doit contenir au maximum {{ limit }} caractères", groups={"register"})
+     * @Assert\Length(min=2, max=50, minMessage="Le prenom doit contenir au minimum {{ limit }} caractères",
+     *      maxMessage="Le prenom doit contenir au maximum {{ limit }} caractères", groups={"register"})
      */
     private $prenom;
 
@@ -87,9 +92,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=30)
      * @Assert\NotBlank(message="Le pseudo est requis !", groups={"register"})
-     * @Assert\Length(min=4, max=30, minMessage="Le pseudo doit contenir au minimum {{ limit }} caractères", maxMessage="Le pseudo doit contenir au maximum {{ limit }} caractères", groups={"register"})
+     * @Assert\Length(min=4, max=30, minMessage="Le pseudo doit contenir au minimum {{ limit }} caractères",
+     *      maxMessage="Le pseudo doit contenir au maximum {{ limit }} caractères", groups={"register"})
      */
     private $pseudo;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Sorties::class,
+     *      inversedBy="listeDesInscrits",cascade={"persist"})
+     * @ORM\JoinTable(name="sorties_user")
+     *
+     */
+    private Collection $SortiesInscrites;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Sorties::class,
+     *      mappedBy="organisateur", orphanRemoval=true)
+     *
+     *
+     */
+    private Collection $listeSortiesOrganisees;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="usersRattaches")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $campusUser;
+
+    public function __construct()
+    {
+        $this->SortiesInscrites = new ArrayCollection();
+        $this->listeSortiesOrganisees = new ArrayCollection();
+    }
+
+
+
 
     //TODO ajouter relation Campus
 
@@ -206,12 +243,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephone(): string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(int $telephone): self
+    public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
 
@@ -253,4 +290,73 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Sorties[]
+     */
+    public function getSortiesInscrites(): Collection
+    {
+        return $this->SortiesInscrites;
+    }
+
+    public function addSortiesInscrite(Sorties $sortiesInscrite): self
+    {
+        if (!$this->SortiesInscrites->contains($sortiesInscrite)) {
+            $this->SortiesInscrites[] = $sortiesInscrite;
+        }
+
+        return $this;
+    }
+
+    public function removeSortiesInscrite(Sorties $sortiesInscrite): self
+    {
+        $this->SortiesInscrites->removeElement($sortiesInscrite);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sorties[]
+     */
+    public function getListeSortiesOrganisees(): Collection
+    {
+        return $this->listeSortiesOrganisees;
+    }
+
+    public function addListeSortiesOrganisee(Sorties $listeSortiesOrganisee): self
+    {
+        if (!$this->listeSortiesOrganisees->contains($listeSortiesOrganisee)) {
+            $this->listeSortiesOrganisees[] = $listeSortiesOrganisee;
+            $listeSortiesOrganisee->setOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListeSortiesOrganisee(Sorties $listeSortiesOrganisee): self
+    {
+        if ($this->listeSortiesOrganisees->removeElement($listeSortiesOrganisee)) {
+            // set the owning side to null (unless already changed)
+            if ($listeSortiesOrganisee->getOrganisateur() === $this) {
+                $listeSortiesOrganisee->setOrganisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCampusUser(): ?Campus
+    {
+        return $this->campusUser;
+    }
+
+    public function setCampusUser(?Campus $campusUser): self
+    {
+        $this->campusUser = $campusUser;
+
+        return $this;
+    }
+
+
+
 }
