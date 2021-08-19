@@ -64,13 +64,6 @@ class Sorties
     private ?string $infosSortie;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @var string|null
-     */
-    private ?string $etat;
-
-
-    /**
      * @ORM\ManyToMany(targetEntity=User::class,
      *     mappedBy="SortiesInscrites", cascade={"persist"})
      *
@@ -88,7 +81,8 @@ class Sorties
     private User $organisateur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="sortiesRattacheesCampus")
+     * @ORM\ManyToOne(targetEntity=Campus::class,
+     *      inversedBy="sortiesRattacheesCampus")
      * @ORM\JoinColumn(nullable=false)
      */
     private $siteOrganisateur;
@@ -216,23 +210,6 @@ class Sorties
     {
         $this->infosSortie = $infosSortie;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getEtat(): ?string
-    {
-        return $this->etat;
-    }
-
-    /**
-     * @param string|null $etat
-     */
-    public function setEtat(?string $etat): void
-    {
-        $this->etat = $etat;
-    }
-
 
     public function getDescription(): ?string
     {

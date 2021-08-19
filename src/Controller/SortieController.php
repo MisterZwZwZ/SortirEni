@@ -10,36 +10,31 @@ use App\Entity\Sorties;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(path="/sortie/", name ="sortie_")
+ * @Route(path="/sortie/", name ="sortie_", requirements={"page"="\d+"})
  */
 class SortieController extends AbstractController
 {
     /**
-     * @Route(path="create", name="create", methods={"GET", "POST"})
+     * @Route(path="new", name="new")
+     * @Route(path="{id}/edit", name="edit")
      */
-    public function CreerUneSortie(Request $request, EntityManagerInterface $entityManager)
+    public function form(Sorties $sortie = null,Request $request, EntityManagerInterface $entityManager)
     {
-        // Création de l'entité à créer
-        $sortie = new Sorties();
+        if (!$sortie){
+            $sortie = new Sorties();
+        }
 
-        // Création du formulaire
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
-        // Récupérer les donnés du navigateur
         $sortieForm->handleRequest($request);
 
-        // Vérifier les donnés du formulaire
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()){
-
-            // Enregistrer les donnés dans la BDD
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            // Ajout message de confirmation
             $this->addFlash('success', 'La sortie a été créer par succès');
 
-            //Redirection sur le controlleur
-            return $this->redirectToRoute('sortie_create');
+            return $this->redirectToRoute('sortie_show', ['id' => $sortie.getIdSortie()]);
         }
 
         return $this->render('sortie/creerUneSortie.html.twig', [
@@ -47,17 +42,11 @@ class SortieController extends AbstractController
         ]);
     }
     /**
-     * @Route(path="AfficherUneSortie", name="afficher_une_sortie")
+     * @Route(path="show", name="show")
      */
-    public function AfficherUneSortie(EntityManagerInterface $entityManager)
+    public function show(EntityManagerInterface $entityManager)
     {
         return $this->render('sortie/afficherUneSortie.html.twig');
     }
-    /**
-     * @Route(path="ModifierUneSortie", name="modifier_une_sortie")
-     */
-    public function ModifierUneSortie()
-    {
-        return $this->render('sortie/modifierUneSortie.html.twig');
-    }
+
 }
