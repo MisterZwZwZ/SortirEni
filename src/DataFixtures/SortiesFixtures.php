@@ -23,7 +23,7 @@ class SortiesFixtures extends Fixture
         for($i = 0; $i <= 5; $i++){
             $villes[$i] = new Villes();
             $villes[$i]->setNom($faker->city);
-            $villes[$i]->setCodePostal(55000);
+            $villes[$i]->setCodePostal((int) $faker->postcode);
             $manager->persist($villes[$i]);
         }
 
