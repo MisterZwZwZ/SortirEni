@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet email", groups={"register"})
+ * @UniqueEntity(fields={"pseudo"}, message="Il existe déjà un compte avec ce pseudo", groups={"register"})
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -76,13 +77,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @Assert\NotBlank(message="Le numéro de téléphone est requis !", groups={"register"})
      * @Assert\Regex(
-     *     pattern="/\d/",
+     *     pattern="#^(0|\+33|0033)[1-9]([-. ]?[0-9]{2}){4}$#",
      *     message="Format de numéro de téléphone invalide",
      *     groups={"register"}
      * )
      */
     private $telephone;
-    //TODO regex verif tel
 
     /**
      * @ORM\Column(type="boolean")
@@ -96,6 +96,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *      maxMessage="Le pseudo doit contenir au maximum {{ limit }} caractères", groups={"register"})
      */
     private $pseudo;
+
 
     /**
      * @ORM\ManyToMany(targetEntity=Sorties::class,
@@ -242,6 +243,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 
     public function getTelephone(): string
     {
