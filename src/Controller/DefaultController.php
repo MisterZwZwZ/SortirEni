@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Sorties;
+use App\Entity\User;
 use App\Repository\SortiesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,25 +21,38 @@ class DefaultController extends AbstractController
      */
     public function accueil(Request $request,EntityManagerInterface $entityManager): Response
     {
-        $sorties = new Sorties();
 
         //création du formulaire
-        $formSortie = $this->createForm('App\Form\RechercheSortiesType',$sorties,);
+        $formSortie = $this->createForm('App\Form\RechercheSortiesType', null);
 
         //récupération des données envoyées par le navigateur et les transmet au formulaire
         $formSortie->handleRequest($request);
+        $listeSorties=[];
 
-        //Vérification des données du formulaires
-        if($formSortie->isSubmitted() && $formSortie->isValid()){
+        //récupération des données
+        $sorties = new Sorties();
+//TODO Tester quand non connecté
+        /** @var User $user */
+        $user = $this->getUser();
+        $dateSortie = $formSortie->get('dateHeureDebutRecherche')->getData();
+        $dateCloture =$formSortie->get('dateFinRecherche')->getData();
+        $keySearch =($formSortie->get('nomRecherche')->getData() === null?'':$formSortie->get('nomRecherche')->getData());
+        $Campus =$formSortie->get('campus')->getData();
 
-            $listeSorties = $entityManager->getRepository(Sorties::class)->find(1);
+        //si l'utilisateur est connecté
+        if ($user->getId()) {
+            //Vérification des données du formulaires
+            if ($formSortie->isSubmitted() && $formSortie->isValid()) {
 
-        }else{
-            //récupère toutes les sorties
-            $listeSorties = $entityManager->getRepository(Sorties::class)->findAll();
-//            dump($listeSorties);
-//            exit();
+                //demande table sortie en fonction des selecteurs
+                $listeSorties = $entityManager->getRepository(Sorties::class)
+                    ->findBySelect($formSortie, $user,$dateSortie , $dateCloture,$keySearch, $Campus);
+            }
+            else{
+                $listeSorties = $entityManager->getRepository(Sorties::class)
+                    ->findBySelect($formSortie, $user,$dateSortie , $dateCloture,$keySearch, $Campus);
 
+            }
         }
 
         return $this->render('default/accueil.html.twig',[
@@ -66,5 +80,7 @@ class DefaultController extends AbstractController
         //TODO faire la méthode d'inscription dès réalisation des relations
         return $this->render('default/accueil.html.twig');
     }
+
+
 
 }

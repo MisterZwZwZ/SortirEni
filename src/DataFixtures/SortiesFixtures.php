@@ -53,17 +53,17 @@ class SortiesFixtures extends Fixture
         }
 
         $users = array();
-        for ($l = 0; $l <= 12; $l++){
-            $users[$l] = new User();
-            $users[$l]->setNom($faker->lastName);
-            $users[$l]->setPrenom($faker->firstName);
-            $users[$l]->setPseudo($faker->userName);
-            $users[$l]->setTelephone($faker->phoneNumber);
-            $users[$l]->setEmail($faker->email);
-            $users[$l]->setPassword($this->passwordHasher->hashPassword($users[$l],'Test123!'));
-            $users[$l]->setActif(true);
-            $users[$l]->setCampusUser($campus[rand(0,2)]);
-            $manager->persist($users[$l]);
+        for ($i = 0; $i <= 11; $i++){
+            $users[$i] = new User();
+            $users[$i]->setNom($faker->lastName);
+            $users[$i]->setPrenom($faker->firstName);
+            $users[$i]->setPseudo($faker->userName);
+            $users[$i]->setTelephone($faker->phoneNumber);
+            $users[$i]->setEmail($faker->email);
+            $users[$i]->setPassword($this->passwordHasher->hashPassword($users[$i],'Test123!'));
+            $users[$i]->setActif(true);
+            $users[$i]->setCampusUser($campus[rand(0,2)]);
+            $manager->persist($users[$i]);
         }
 
 
@@ -101,10 +101,20 @@ class SortiesFixtures extends Fixture
                 $sorties[$m]->setDuree($faker->numberBetween(30,120));
                 $sorties[$m]->setDescription($faker->text);
                 $sorties[$m]->setEtatSortie($etats);
-                $sorties[$m]->setOrganisateur($users[mt_rand(0,11)]);
+                $sorties[$m]->setOrganisateur($users[rand(0,11)]);
                 $sorties[$m]->setSiteOrganisateur($campus[rand(0,2)]);
                 $sorties[$m]->setNbIncriptionsMax($faker->numberBetween(2,20));
                 $sorties[$m]->setLieu($lieux[mt_rand(0,7)]);
+
+
+                for ( $i = 0 ; $i < count($users);$i++){
+                    if(rand(0,3)===1){
+                        $sorties[$m]->addListeDesInscrit($users[$i]);
+                    }
+                }
+
+
+
                 $manager->persist($sorties[$m]);
             }
         $manager->flush();
