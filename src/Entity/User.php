@@ -137,7 +137,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="usersRattaches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $campusUser;
+    private Campus $campusUser;
 
     public function __construct()
     {

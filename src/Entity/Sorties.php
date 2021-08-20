@@ -7,10 +7,12 @@ use App\Repository\SortiesRepository;
 
 
 use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Array_;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -30,30 +32,39 @@ class Sorties
     /**
      * @var string|null
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
+     * @Assert\Length(min="8",
+     *                max="255",
+     *                minMessage="Le nom de la sortie doit faire au minimum 8 caractères",
+     *                maxMessage="Le nom de la sortie doit faire au maximum 255 caractères")
      */
     private ?string $nom;
 
     /**
      * @ORM\Column(type="datetime")
      * @var DateTime
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      */
-    private ?DateTime $dateHeureDebut;
+    private ?DateTimeInterface $dateHeureDebut;
 
     /**
      * @ORM\Column(type="datetime")
      * @var DateTime
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      */
-    private ?DateTime $dateLimiteInscription;
+    private ?DateTimeInterface $dateLimiteInscription;
 
     /**
      * @ORM\Column(type="integer")
      * @var int|null
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      */
     private int $duree;
 
     /**
      * @ORM\Column(type="integer")
      * @var int|null
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      */
     private ?int $nbIncriptionsMax;
 
@@ -67,9 +78,7 @@ class Sorties
     /**
      * @ORM\ManyToMany(targetEntity=User::class,
      *     mappedBy="SortiesInscrites", cascade={"persist"})
-     *
-     *
-     * ensemble des id des participants inscrits
+     * Ensemble des id des participants inscrits
      */
     private Collection $listeDesInscrits;
 
@@ -91,6 +100,7 @@ class Sorties
     /**
      * @ORM\ManyToOne(targetEntity=Lieux::class, inversedBy="sortiesRattacheesLieu")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      */
     private $lieu;
 
@@ -104,8 +114,6 @@ class Sorties
     {
         $this->listeDesInscrits = new ArrayCollection();
     }
-
-
 
     /**
      * @return int
@@ -132,33 +140,33 @@ class Sorties
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
-    public function getDateHeureDebut(): ?DateTime
+    public function getDateHeureDebut(): ?DateTimeInterface
     {
         return $this->dateHeureDebut;
     }
 
     /**
-     * @param DateTime $dateHeureDebut
+     * @param DateTimeInterface $dateHeureDebut
      */
-    public function setDateHeureDebut(?DateTime $dateHeureDebut): void
+    public function setDateHeureDebut(?DateTimeInterface $dateHeureDebut): void
     {
         $this->dateHeureDebut = $dateHeureDebut;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
-    public function getDateLimiteInscription(): ?DateTime
+    public function getDateLimiteInscription(): ?DateTimeInterface
     {
         return $this->dateLimiteInscription;
     }
 
     /**
-     * @param DateTime $dateLimiteInscription
+     * @param DateTimeInterface $dateLimiteInscription
      */
-    public function setDateLimiteInscription(?DateTime $dateLimiteInscription): void
+    public function setDateLimiteInscription(?DateTimeInterface $dateLimiteInscription): void
     {
         $this->dateLimiteInscription = $dateLimiteInscription;
     }

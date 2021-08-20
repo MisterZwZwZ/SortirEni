@@ -31,6 +31,9 @@
                 <td>{{ sorties.dateLimiteInscription|date('m/d/y') }}</td>
                 <td>{{ sorties.listeDesInscrits | length }}/{{ sorties.nbIncriptionsMax }}</td>
                 <td>{{ sorties.etatSortie.libelle}}</td>
+
+                <td></td>
+                //TODO inscrit true /false
                 <td>{{ sorties.organisateur.pseudo}}</td>
 {#                //TODO récupérer les nom des organisateurs#}
                 <td>
@@ -55,7 +58,7 @@
 </div>
 
 <div>
-    <button type="button"><a href="creer_une_sortie">Créer sortie</a></button>
+    <button type="button"><a href="{{ path('sortie_new') }}">Créer sortie</a></button>
 </div>
 
 {% endblock body%}

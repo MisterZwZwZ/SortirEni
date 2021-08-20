@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
+use App\Form\AffichageSortieType;
 use App\Form\SortieType;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,10 +21,17 @@ class SortieController extends AbstractController
      * @Route(path="new", name="new")
      * @Route(path="{id}/edit", name="edit")
      */
-    public function form(Sorties $sortie = null,Request $request, EntityManagerInterface $entityManager)
+    public function gestionSortie(Sorties $sortie = null,Request $request, EntityManagerInterface $entityManager)
     {
         if (!$sortie){
             $sortie = new Sorties();
+            $title = 'Créer une sortie';
+        } else{
+            $title = 'Modifier une sortie';
+            $dateDebut = (DateTimeImmutable::createFromMutable($sortie->getDateHeureDebut()));
+            $dateInscr = (DateTimeImmutable::createFromMutable($sortie->getDateLimiteInscription()));
+            $sortie->setDateHeureDebut($dateDebut);
+            $sortie->setDateLimiteInscription($dateInscr);
         }
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
@@ -34,19 +44,30 @@ class SortieController extends AbstractController
 
             $this->addFlash('success', 'La sortie a été créer par succès');
 
-            return $this->redirectToRoute('sortie_show', ['id' => $sortie.getIdSortie()]);
+            return $this->redirectToRoute('sortie_show');
         }
 
         return $this->render('sortie/creerUneSortie.html.twig', [
-            "sortieForm" => $sortieForm->createView()
+            "sortieForm" => $sortieForm->createView(),
+            'title' => $title
         ]);
     }
+
     /**
-     * @Route(path="show", name="show")
+     * @Route(path="{id}/show", name="show")
      */
-    public function show(EntityManagerInterface $entityManager)
+    public function show(Sorties $sortie, EntityManagerInterface $entityManager)
     {
-        return $this->render('sortie/afficherUneSortie.html.twig');
+            $campus = $sortie->getSiteOrganisateur();
+            $lieu = $sortie->getLieu();
+            $ville = $lieu->getVille();
+
+                return $this->render('sortie/afficherUneSortie.html.twig', [
+            "sortie" => $sortie,
+            "campus" => $campus,
+            "lieu" => $lieu,
+            "ville" => $ville,
+        ]);
     }
 
 }

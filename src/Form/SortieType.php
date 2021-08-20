@@ -3,10 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Lieux;
-use App\Entity\Sorties;
-use App\Entity\Campus;
 use App\Entity\Villes;
-use App\Repository\CampusRepository;
 use App\Repository\LieuxRepository;
 use App\Repository\VillesRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,9 +15,16 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Security\Core\Security;
 
 class SortieType extends AbstractType
 {
+    private ?Security $security = null;
+
+    public function __construct(Security $security) {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom', TextType::class, [
@@ -32,14 +36,16 @@ class SortieType extends AbstractType
 
         $builder->add('dateHeureDebut', DateTimeType::class, [
             'label' => 'Date et heure de la sortie: ',
-            'trim' => true,
             'required' => true,
+            'input'  => 'datetime_immutable',
+            'widget' => 'single_text',
         ]);
 
         $builder->add('dateLimiteInscription', DateType::class, [
             'label' => 'Date limite d\'inscription: ',
-            'trim' => true,
             'required' => true,
+            'input'  => 'datetime_immutable',
+            'widget' => 'single_text',
         ]);
 
         $builder->add('nbIncriptionsMax', NumberType::class, [
@@ -63,19 +69,11 @@ class SortieType extends AbstractType
             'attr' => ['placeholder' => 'Description et infos de la sortie'],
         ]);
 
-        $builder->add('campus', EntityType::class,[
+        $builder->add('campus', TextType::class,[
             'label'=>'Campus',
             'required'=>false,
-            'disabled' => true,
-            'class'=> Campus::class,
-            'query_builder'=> function (CampusRepository $campusRepository){
-                return $campusRepository->createQueryBuilder('campus')
-                    ->orderBy('campus.nomCampus','ASC');
-
-            },
-            'choice_label'=>'nomCampus',
             'mapped'=>false,
-
+            'data' => $this->security->getUser()->getCampusUser()->getNomCampus(),
         ]);
 
         $builder->add('villes', EntityType::class,[
@@ -100,70 +98,25 @@ class SortieType extends AbstractType
             'query_builder'=> function (LieuxRepository $lieuxRepository){
                 return $lieuxRepository->createQueryBuilder('lieux')
                     ->orderBy('lieux.nom','ASC');
-
             },
             'choice_label'=>'nom',
             'mapped'=>false,
-            'attr' => ['placeholder' => 'Choisir un lieux'],
-
         ]);
 
           $builder->add('ajoutLieu', SubmitType::class, [
               'label' => '+',
           ]);
 
-          $builder->add('rue', EntityType::class, [
+          $builder->add('rue', TextType::class, [
               'label' => 'Rue:',
               'trim' => true,
-              'disabled' => true,
-              'class'=> Lieux::class,
-              'query_builder'=> function (LieuxRepository $lieuxRepository){
-                  return $lieuxRepository->createQueryBuilder('lieux')
-                      ->orderBy('lieux.rue','ASC');
-
-              },
-              'choice_label'=>'rue',
               'mapped'=>false,
           ]);
 
-          $builder->add('codePostal', EntityType::class, [
+          $builder->add('codePostal', TextType::class, [
               'label' => 'Code Postal:',
               'trim' => true,
-              'disabled' => true,
-              'class'=> Villes::class,
-              'query_builder'=> function (VillesRepository $villesRepository){
-                  return $villesRepository->createQueryBuilder('villes')
-                      ->orderBy('villes.codePostal','ASC');
-
-              },
-              'choice_label'=>'codePostal',
               'mapped'=>false,
           ]);
-
-          $builder->add('latitude', EntityType::class, [
-              'label' => 'Latitude:',
-              'trim' => true,
-              'class'=> Lieux::class,
-              'query_builder'=> function (LieuxRepository $lieuxRepository){
-                  return $lieuxRepository->createQueryBuilder('lieux')
-                      ->orderBy('lieux.latitude','ASC');
-
-              },
-              'mapped'=>false,
-              'attr' => ['placeholder' => 'Latitude du lieux'],
-          ]);
-
-        $builder->add('longitude', EntityType::class, [
-            'label' => 'Longitude:',
-            'trim' => true,
-            'class'=> Lieux::class,
-            'query_builder'=> function (LieuxRepository $lieuxRepository){
-                return $lieuxRepository->createQueryBuilder('lieux')
-                    ->orderBy('lieux.longitude','ASC');
-
-            },
-            'mapped'=>false,
-            'attr' => ['placeholder' => 'Longitude du lieux'],
-        ]);
   }
 }
