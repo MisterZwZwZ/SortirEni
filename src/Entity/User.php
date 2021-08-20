@@ -27,11 +27,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=30, unique=true)
-     * @Assert\NotBlank(message="L'email est requis !", groups={"register"})
-     * @Assert\Email(message="L'email est invalide !", groups={"register"})
+     * @Assert\NotBlank(message="L'email est requis", groups={"register"})
+     * @Assert\Email(message="L'email est invalide", groups={"register"})
      * @Assert\Regex(
      *     pattern="#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",
-     *     message="Format d'email invalide",
+     *     message="Veuillez entrer un format d'email valide",
      *     groups={"register"}
      * )
      */
@@ -64,7 +64,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank(message="Le nom est requis !", groups={"register"})
      * @Assert\Length(min=2, max=50, minMessage="Le nom doit contenir au minimum {{ limit }} caractères",
      *     maxMessage="Le nom doit contenir au maximum {{ limit }} caractères", groups={"register"})
-     *
+     * @Assert\Regex(
+     *     pattern="#^[A-Z][\p{L} -]*$#",
+     *     message="Carractères non-autorisés dans le nom",
+     *     groups={"register"}
+     * )
      */
     private $nom;
 
@@ -74,6 +78,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank(message="Le prenom est requis !", groups={"register"})
      * @Assert\Length(min=2, max=50, minMessage="Le prenom doit contenir au minimum {{ limit }} caractères",
      *      maxMessage="Le prenom doit contenir au maximum {{ limit }} caractères", groups={"register"})
+     * @Assert\Regex(
+     *     pattern="#^[A-Z][\p{L} -]*$#",
+     *     message="Carractères non-autorisés dans le prenom",
+     *     groups={"register"}
+     * )
      */
     private $prenom;
 
@@ -81,6 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      *
      * @Assert\NotBlank(message="Le numéro de téléphone est requis !", groups={"register"})
+     * @Assert\Length (min=10, minMessage="le numero doit être d'au moins 10 chiffres")
      * @Assert\Regex(
      *     pattern="#^(0|\+33|0033)[1-9]([-. ]?[0-9]{2}){4}$#",
      *     message="Format de numéro de téléphone invalide",
@@ -99,6 +109,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank(message="Le pseudo est requis !", groups={"register"})
      * @Assert\Length(min=4, max=30, minMessage="Le pseudo doit contenir au minimum {{ limit }} caractères",
      *      maxMessage="Le pseudo doit contenir au maximum {{ limit }} caractères", groups={"register"})
+     * @Assert\Regex(
+     *     pattern="#^[A-Z][\p{L} -]*$#",
+     *     message="Carractères non-autorisés dans le pseudo",
+     *     groups={"register"}
+     * )
      */
     private $pseudo;
 
@@ -114,7 +129,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Sorties::class,
      *      mappedBy="organisateur", orphanRemoval=true)
-     *
      *
      */
     private Collection $listeSortiesOrganisees;

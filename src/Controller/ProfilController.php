@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\ProfilType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,23 +16,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfilController extends AbstractController
 {
     /**
-     * @Route("{id}/afficher", name="afficher", requirements={"id": "\d+"}, methods={"GET", "POST"})
+     * @Route("afficher/{id}", name="afficher", requirements={"id": "\d+"}, methods={"GET", "POST"})
      */
-    public function afficherProfil(): Response
+    public function afficherProfil(Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('monprofil.html.twig', [
-            'controller_name' => 'ProfilController',
-        ]);
+        $profilId = $request->get('id');
+        $profil = $entityManager->getRepository(User::class)->find($profilId);
+        return $this->render('profil/afficherprofil.html.twig',['profil' => $profil]);
     }
 
     /**
-     * @Route("modifier", name="modifier", methods={"GET", "POST"})
+     * @Route("modifier/{id}", requirements={"id": "\d+"}, name="modifier", methods={"GET", "POST"})
      */
     public function modifierProfil(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        $pass = $user->getPassword();
-        dump($pass);
+
         $form = $this->createForm(ProfilType::class,$user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -41,6 +41,8 @@ class ProfilController extends AbstractController
             $this->addFlash('success', 'Modification enregistrée');
             return $this->redirectToRoute('profil_modifier', ['id' => $user->getId()]);
         }
+        // Reset User a ses valeurs par défaut pour qu'elles ne soient pas enregistrées en session en cas de non validation
+        $entityManager->refresh($user);
         return $this->render('profil/monprofil.html.twig', [
             "userForm" => $form->createView(),
             'user' => $user

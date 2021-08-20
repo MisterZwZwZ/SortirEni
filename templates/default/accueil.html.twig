@@ -29,11 +29,9 @@
                 <td>{{ sorties.nom }}</td>
                 <td>{{ sorties.dateHeureDebut|date('m/d/y')}}</td>
                 <td>{{ sorties.dateLimiteInscription|date('m/d/y') }}</td>
-                <td>{{ sorties.inscrit | length }}/{{ sorties.nbIncriptionsMax }}</td>
-                <td>{{ sorties.etat }}</td>
-                <td></td>
-                    //TODO inscrit true /false
-                <td>{{ sorties.idOrganisateur}}</td>
+                <td>{{ sorties.listeDesInscrits | length }}/{{ sorties.nbIncriptionsMax }}</td>
+                <td>{{ sorties.etatSortie.libelle}}</td>
+                <td>{{ sorties.organisateur.pseudo}}</td>
 {#                //TODO récupérer les nom des organisateurs#}
                 <td>
                         {#  les actions #}
