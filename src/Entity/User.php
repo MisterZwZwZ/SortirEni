@@ -110,7 +110,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\Length(min=4, max=30, minMessage="Le pseudo doit contenir au minimum {{ limit }} caractères",
      *      maxMessage="Le pseudo doit contenir au maximum {{ limit }} caractères", groups={"register"})
      * @Assert\Regex(
-     *     pattern="#^[A-Z][\p{L} -]*$#",
+     *     pattern="#^([a-zA-Z0-9-_]{4,30})$#",
      *     message="Carractères non-autorisés dans le pseudo",
      *     groups={"register"}
      * )
@@ -185,11 +185,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->roles;
     }
 
     public function setRoles(array $roles): self

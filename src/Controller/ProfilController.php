@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("{/profil/", name="profil_")
+ * @Route("/profil/", name="profil_")
  */
 class ProfilController extends AbstractController
 {
