@@ -19,7 +19,7 @@ use function Sodium\add;
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("", name="accueil", methods={"GET","POST"})
+     * @Route(path="", name="accueil", methods={"GET","POST"})
      */
     public function accueil(Request $request,EntityManagerInterface $entityManager): Response
     {
