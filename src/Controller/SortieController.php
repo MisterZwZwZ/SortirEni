@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Campus;
+use App\Entity\Etats;
 use App\Form\AffichageSortieType;
 use App\Form\SortieType;
+use App\Repository\EtatsRepository;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,5 +71,39 @@ class SortieController extends AbstractController
             "ville" => $ville,
         ]);
     }
+
+    /**
+     * @Route(path="{id}/annuler" , name="annuler",methods={"GET","POST"})
+     */
+    public function annuler(Sorties $sorties,Request $request, EntityManagerInterface $entityManager)
+    {
+
+        $form = $this->createForm('App\Form\AnnulerSortieType',null);
+        $form->handleRequest($request);
+        //vérification que la sortie est publiée pour être annulée
+        if($sorties->getEtatSortie()===2 || $sorties->getEtatSortie()===3 )
+            if($form->isSubmitted() && $form->isValid()){
+                $sorties->setEtatSortie($entityManager->getRepository('App:Etats')->find(6));
+
+    //            dump($form->get('motif')->getData());
+    //            exit();
+                $motif = "Sortie ANNULEE - ".$form->get('motif')->getData();
+                $sorties->setInfosSortie($motif);
+
+                $entityManager->persist($sorties);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('default_accueil');
+            }
+        else{
+            $this->addFlash('warning', 'la sortie ne peut être annulée. veuillez la publier d\'abord');
+        }
+
+        return $this->render('sortie/annulerSortie.html.twig',
+            ['sortie'=>$sorties, 'form'=>$form->createView()]
+        );
+
+    }
+
 
 }

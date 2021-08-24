@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -52,15 +53,20 @@ class RechercheSortiesType extends AbstractType
             'label'=>'Le nom de la sortie :',
             'attr'=>['placeholder'=>'saisir mots clés d\'une sortie']
         ]);
-        $builder->add('dateHeureDebutRecherche', DateTimeType::class,[
+        $builder->add('dateHeureDebutRecherche', DateType::class,[
             'required'=> false,
             'mapped'=>false,
-            'label'=>'Entre :'
+            'label'=>'Entre :',
+            'input'  => 'datetime_immutable',
+            'widget' => 'single_text',
+//
         ]);
-        $builder->add('dateFinRecherche',DateTimeType::class,[
+        $builder->add('dateFinRecherche',DateType::class,[
             'required'=> false,
             'mapped'=>false,
-            'label'=>'et :'
+            'label'=>'Et :',
+            'input'  => 'datetime_immutable',
+            'widget' => 'single_text'
 
         ]);
         $builder->add('SortiesOrganisateurs', CheckboxType::class,[
@@ -82,7 +88,7 @@ class RechercheSortiesType extends AbstractType
             'mapped'=>false,
         ]);
         $builder->add('SortiesPassees', CheckboxType::class,[
-            'label'=>'SortiesFixtures passées',
+            'label'=>'Sorties passées',
             'trim'=>true,
             'required'=> false,
             'mapped'=>false,

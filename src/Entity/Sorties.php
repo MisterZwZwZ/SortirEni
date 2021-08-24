@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\EtatsRepository;
 use App\Repository\SortiesRepository;
 
 
@@ -108,11 +109,12 @@ class Sorties
      * @ORM\ManyToOne(targetEntity=Etats::class, inversedBy="sortiesRattacheesEtat")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $etatSortie;
+    private Etats $etatSortie;
 
     public function __construct()
     {
         $this->listeDesInscrits = new ArrayCollection();
+
     }
 
     /**
@@ -172,6 +174,14 @@ class Sorties
     }
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * @return int|null
      */
     public function getDuree()
@@ -220,18 +230,6 @@ class Sorties
         $this->infosSortie = $infosSortie;
     }
 
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     /**
      * @return Collection|User[]

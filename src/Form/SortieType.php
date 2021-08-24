@@ -37,14 +37,14 @@ class SortieType extends AbstractType
         $builder->add('dateHeureDebut', DateTimeType::class, [
             'label' => 'Date et heure de la sortie: ',
             'required' => true,
-            'input'  => 'datetime_immutable',
+//            'input'  => 'datetime_immutable',
             'widget' => 'single_text',
         ]);
 
         $builder->add('dateLimiteInscription', DateType::class, [
             'label' => 'Date limite d\'inscription: ',
             'required' => true,
-            'input'  => 'datetime_immutable',
+//            'input'  => 'datetime_immutable',
             'widget' => 'single_text',
         ]);
 

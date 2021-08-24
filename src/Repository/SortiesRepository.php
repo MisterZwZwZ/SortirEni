@@ -28,7 +28,21 @@ class SortiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sorties::class);
         $this->security = $security;
     }
+    public function findByField(){
 
+    }
+
+
+        /**
+     * @param FormInterface $form
+     * @param User|null $user
+     * @param DateTimeInterface|null $dateSortie
+     * @param DateTimeInterface|null $dateCloture
+     * @param string|null $keySearch
+     * @param Campus|null $campus
+     * @return int|mixed|string
+     * Return les éléments en fonctions de la selection des checkboxs de la page d'accueil
+     */
     public function findBySelect(FormInterface      $form, ?User $user,
                                  ?DateTimeInterface $dateSortie,?DateTimeInterface $dateCloture,
                                  ?string            $keySearch, ?Campus $campus
