@@ -10,19 +10,13 @@
 {#    </style>#}
 {#    <h1>profil de {{ profil.pseudo }}</h1>#}
 
-{#<div class="example-wrapper">#}
-<div>
-    <div>
-{#        <div class="list-group-item list-group-item-action active">Détails du souhait: {{ wish.id }}#}
-{#            {% if wish.user.id == app.user.id or is_granted("ROLE_ADMIN") %}#}
-{#                (<a style="color:white" href="{{ url('wish_edit', {"id": wish.id }) }}">Edit</a> - <a style="color:white" href="{{ url('wish_remove', {"id": wish.id }) }}">Supprimer</a>)#}
-{#            {% endif %}#}
-{#        </div>#}
-        <div class="list-group-item list-group-item-action">Prenom : {{ profil.prenom }}</div>
-        <div class="list-group-item list-group-item-action">Nom : {{ profil.nom }}</div>
-        <div class="list-group-item list-group-item-action">Téléphone : {{ profil.telephone}}</div>
-        <div class="list-group-item list-group-item-action">Email : {{ profil.email }}</div>
-        <div class="list-group-item list-group-item-action">Campus : {{ profil.campusUser.nomCampus }}</div>
+<div class="example-wrapper">
+    <div class="row">
+        <div class=""><label>Prenom : </label><p>{{ profil.prenom }}</p></div>
+        <div class=""><label>Nom : </label><p>{{ profil.nom }}</p></div>
+        <div class=""><label>Téléphone : </label><p>{{ profil.telephone}}</p></div>
+        <div class=""><label>Email : </label><p>{{ profil.email }}</p></div>
+        <div class=""><label>Campus : </label><p>{{ profil.campusUser.nomCampus }}</p></div>
     </div>
     <div class="mt-3">
 

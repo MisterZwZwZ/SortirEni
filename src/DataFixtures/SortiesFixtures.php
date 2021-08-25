@@ -99,7 +99,7 @@ class SortiesFixtures extends Fixture
                 $sorties[$m]->setDateHeureDebut($faker->dateTime);
                 $sorties[$m]->setDateLimiteInscription($faker->dateTime);
                 $sorties[$m]->setDuree($faker->numberBetween(30,120));
-                $sorties[$m]->setDescription($faker->text);
+                $sorties[$m]->setInfosSortie($faker->text);
                 $sorties[$m]->setEtatSortie($etats);
                 $sorties[$m]->setOrganisateur($users[rand(0,11)]);
                 $sorties[$m]->setSiteOrganisateur($campus[rand(0,2)]);
@@ -112,9 +112,6 @@ class SortiesFixtures extends Fixture
                         $sorties[$m]->addListeDesInscrit($users[$i]);
                     }
                 }
-
-
-
                 $manager->persist($sorties[$m]);
             }
         $manager->flush();

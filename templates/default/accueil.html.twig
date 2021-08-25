@@ -23,6 +23,12 @@
     </div>
 
 
+                            <td>{{ sorties.nom }}</td>
+                            <td>{{ sorties.dateHeureDebut|date('d/m/y')}}</td>
+                            <td>{{ sorties.dateLimiteInscription|date('d/m/y') }}</td>
+                            <td>{{ sorties.listeDesInscrits | length }}/{{ sorties.nbIncriptionsMax }}</td>
+                            <td>{{ sorties.etatSortie.libelle}}</td>
+
     <div class="col-2 align-self-end">
         {{ form_row(form_accueil.SortiesOrganisateurs) }}
         {{ form_row(form_accueil.SortiesInscrits) }}

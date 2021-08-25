@@ -19,33 +19,18 @@
                             {{ form_row(sortieForm.campus) }}
                             {{ form_row(sortieForm.villes) }}
                             {{ form_row(sortieForm.lieu) }}
-                            <div class="row">
-                                <div class="col-md-9">
-                                </div>
-                                <div class="col-md-3">
-{#                                    {{ form_row(sortieForm.ajoutLieu) }}#}
-                                </div>
-                            </div>
-{#                            {{ form_row(sortieForm.rue) }}#}
-{#                            {{ form_row(sortieForm.codePostal) }}#}
-{#                            {{ form_row(sortieForm.latitude) }}#}
-{#                            {{ form_row(sortieForm.longitude) }}#}
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center">
-{#                        {% if sortieForm. %}#}
-                    <button name="btn-creer" type="submit" class="btn btn-primary mx-4" value="creer">Enregistrer</button>
-                    <button name="btn-creer" type="submit" class="btn btn-primary mx-4" value="publier">Publier la sortie</button>
-                    <button name="btn-creer" type="submit" class="btn btn-primary mx-4" value="annuler">Annuler</button>
-
                     <div class="row p-4">
-                        <div class="col-md-4 d-flex justify-content-center p-3">
+                        <div class="col d-flex justify-content-center p-3">
                             <button name="btn-submit" type="submit" class="btn btn-primary mx-4" value="creer">Enregistrer</button>
                         </div>
-                        <div class="col-md-4 d-flex justify-content-center p-3">
-                            <button name="btn-submit" type="submit" class="btn btn-primary mx-4" value="publier">Publier la sortie</button>
-                        </div>
-                        <div class="col-md-4 d-flex justify-content-center p-3">
+                        {% if btnPublier == 1 %}
+                            <div class="col d-flex justify-content-center p-3">
+                                <button name="btn-submit" type="submit" class="btn btn-primary mx-4" value="publier">Publier la sortie</button>
+                            </div>
+                        {% endif %}
+                        <div class="col d-flex justify-content-center p-3">
                             <button name="btn-submit" type="submit" class="btn btn-primary mx-4" value="annuler">Annuler</button>
                         </div>
                     </div>

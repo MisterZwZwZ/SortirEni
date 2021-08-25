@@ -77,12 +77,13 @@ class SortieType extends AbstractType
         ]);
 
         $builder->add('villes', EntityType::class,[
-            'label'=>'Ville',
-            'required'=>false,
-            'placeholder' => 'Sélectionner une ville',
             'class'=> Villes::class,
-            'choice_label'=>'nom',
+            'required'=>false,
             'mapped'=>false,
+            'label'=>'Ville',
+            'placeholder' => 'Sélectionner une ville',
+            'choice_label'=>'nom',
+
         ]);
 
         $builder->get('villes')->addEventListener(
@@ -91,8 +92,6 @@ class SortieType extends AbstractType
                 $ville = $event->getForm()->getData();
                 $form = $event->getForm()->getParent();
                 $this->addLieuxField($form, $ville);
-                dump($ville);
-
             }
         );
 

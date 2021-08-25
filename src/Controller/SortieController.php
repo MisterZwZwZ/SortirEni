@@ -24,27 +24,39 @@ class SortieController extends AbstractController
      */
     public function gestionSortie(Sorties $sortie = null,Request $request, EntityManagerInterface $entityManager)
     {
+        //Variable pour détecter le mode edit
+        $edit = false;
+
+        //Test et ajout de champs selon la route new ou edit
         if (!$sortie) {
             $sortie = new Sorties();
             $title = 'Créer une sortie';
+            $btnPublier = 1;
         } else {
+            $edit = true;
             $title = 'Modifier une sortie';
+            if ($sortie->getEtatSortie()->getId() === 1){
+                $btnPublier = 1;
+            }elseif($sortie->getEtatSortie()->getId()){
+                $btnPublier = 0;
+            }
         }
-        /**@var User $user*/
-        $user = new User();
+
+        //Ajout du site oragnisateur et de l'organisateur
         $user = $this->getUser();
-        $sortie->setSiteOrganisateur($user->getCampusUser());
         $sortie->setOrganisateur($user);
+        $sortie->setSiteOrganisateur($user->getCampusUser());
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
-
         $sortieForm->handleRequest($request);
 
+        //Récupération des données des bouttons
         $btnSubmit = $request->get('btn-submit');
 
+        //Si le boutton créer est submit il y a une redirection vers la page d'accueil et l'ajout de sortie avec etat créée
         if ($btnSubmit === "creer") {
-            $sortie->setEtatSortie($entityManager->getRepository('App:Etats')->find(1));
-            dump($sortie);
+            $etatCreer = $entityManager->getRepository('App:Etats')->find(1);
+            $sortie->setEtatSortie($etatCreer);
             if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
                 $entityManager->persist($sortie);
@@ -54,11 +66,12 @@ class SortieController extends AbstractController
 
                 return $this->redirectToRoute('default_accueil');
             }
+
+            //Si le boutton publier est submit il y a une redirection vers la page d'accueil et l'ajout de sortie avec etat publier
         } elseif ($btnSubmit === "publier") {
-            $sortie->setEtatSortie($entityManager->getRepository('App:Etats')->find(2));
-
+            $etatPublier = $entityManager->getRepository('App:Etats')->find(2);
+            $sortie->setEtatSortie($etatPublier);
             if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-
                 $entityManager->persist($sortie);
                 $entityManager->flush();
 
@@ -66,15 +79,28 @@ class SortieController extends AbstractController
 
                 return $this->redirectToRoute('default_accueil');
             }
+
+            //Si le boutton annuler est submit il y a une redirection vers la page d'accueil
         } elseif ($btnSubmit === "annuler") {
-            $id = $sortie->getIdSortie();
-            return $this->redirectToRoute('sortie_show', ['id' => $id]);
+            return $this->redirectToRoute('default_accueil');
         }
 
-        return $this->render('sortie/gestionUneSortie.html.twig', [
-            'sortieForm' => $sortieForm->createView(),
-            'title' => $title
-        ]);
+        if ($edit = true){
+            return $this->render('sortie/gestionUneSortie.html.twig', [
+                'sortieForm' => $sortieForm->createView(),
+                'title' => $title,
+                'sortie' => $sortie,
+                'btnPublier' => $btnPublier
+            ]);
+        }else{
+            return $this->render('sortie/gestionUneSortie.html.twig', [
+                'sortieForm' => $sortieForm->createView(),
+                'title' => $title,
+                'btnPublier' => $btnPublier
+            ]);
+        }
+
+
     }
 
     /**
