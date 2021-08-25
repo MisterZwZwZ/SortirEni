@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon profil{% endblock %}
-
+{% block title_2 %}Mon profil{% endblock title_2 %}
+{% block taille %}w-50{% endblock taille %}
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
@@ -9,12 +9,13 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Mon profil</h1>
+{#    <h1>Mon profil</h1>#}
 
     {{ form_start(userForm) }}
         {{ form_widget(userForm) }}
     <button type="submit" class="btn btn-lg btn-primary">Enregistrer</button>
-    <button type="submit" onclick="history.go(-1)" class="btn btn-lg btn-primary">Retour</button>
+    <button class="btn btn-primary"><a class="customize" href="{{ path('default_accueil') }}">Retour</a></button>
+    {#    <button type="submit" onclick="history.go(-1)" class="btn btn-lg btn-primary">Retour</button>#}
     {{ form_end(userForm) }}
 
 </div>

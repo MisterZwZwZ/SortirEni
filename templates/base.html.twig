@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Sortir.com{% endblock %}</title>
@@ -46,14 +46,32 @@
                     </div>
                 </div>
             </nav>
+        <div class="p-3 ">
         {% endblock %}
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="flash-{{ label }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+        {#            {% block flash %}#}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class=" alert alert-dismissible alert-{{ label }}">
+                    {{ message }}
+                </div>
             {% endfor %}
-        {% block body %}{% endblock %}
+
+        {% endfor %}
+        {#            {% endblock %}#}
+        </div>
+
+        <div class="p-3 d-flex jus">
+            <div class="border-primary card {% block taille %}{% endblock taille %}">
+                <div class="card-header " >{% block title_2 %}  le titre {% endblock title_2 %}</div>
+                <div class="card-body">
+
+                    {% block body %}  Block Body  {% endblock %}
+                </div>
+            </div>
+        </div>
+
+        {% block script %}{% endblock %}
+
+
     </body>
 </html>

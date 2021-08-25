@@ -143,6 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->SortiesInscrites = new ArrayCollection();
         $this->listeSortiesOrganisees = new ArrayCollection();
+        $this->roles[0]='ROLE_USER';
     }
 
     public function getId(): ?int
