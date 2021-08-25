@@ -10,6 +10,7 @@ use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Security;
 
@@ -28,52 +29,42 @@ class SortiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sorties::class);
         $this->security = $security;
     }
-    public function findByField(){
-
-    }
 
 
         /**
-     * @param FormInterface $form
      * @param User|null $user
      * @param DateTimeInterface|null $dateDebRech
      * @param DateTimeInterface|null $dateFinRech
      * @param string|null $keySearch
      * @param Campus|null $campus
+     * @param Bool|null $booleanOrganisateur
+     * @param Bool|null $booleanUserInscrit
+     * @param Bool|null $booleanUserNonInscrit
+     * @param Bool|null $booleanSortiesPassees
      * @return int|mixed|string
      * Return les éléments en fonctions de la selection des checkboxs de la page d'accueil
      */
-    public function findBySelect(FormInterface      $form, ?User $user,
+
+
+
+    public function findBySelect(?User              $user,
                                  ?DateTimeInterface $dateDebRech, ?DateTimeInterface $dateFinRech,
-                                 ?string            $keySearch, ?Campus $campus
+                                 ?string            $keySearch, ?Campus $campus,
+                                 ?Bool              $booleanOrganisateur, ?Bool $booleanUserInscrit,
+                                 ?Bool              $booleanUserNonInscrit, ?Bool $booleanSortiesPassees
     ){
-
-        //récupération des données
-        $booleanOrganisateur = $form->get('SortiesOrganisateurs')->getData()   ;
-        $booleanUserInscrit = $form->get('SortiesInscrits')->getData()  ;
-        $booleanUserNonInscrit = $form->get('SortiesNonInscrits')->getData()   ;
-        $booleanSortiesPassees = $form->get('SortiesPassees')->getData()    ;
-
-//        dump($booleanOrganisateur);
-//        dump($booleanUserInscrit);
-//        dump($booleanUserNonInscrit);
-//        dump($booleanSortiesPassees);
-//        exit();
 
 
         //Création de la requête de base
              $query = $this->createQueryBuilder('sorties')
                  ->orderBy('sorties.dateLimiteInscription', 'DESC');
-            dump($dateDebRech);
+
              if($dateDebRech !== null){
                  $query =
                      $query->andWhere(':dateDebRecherche < sorties.dateLimiteInscription')
                      ->setParameter('dateDebRecherche',$dateDebRech );
-
-
              };
 
-//        dump($dateSortie);
             if($dateFinRech !== null){
                 $query =
                     $query->andWhere('sorties.dateLimiteInscription < :dateFinRecherche')
@@ -86,6 +77,7 @@ class SortiesRepository extends ServiceEntityRepository
                     $query->andWhere('sorties.nom LIKE :KeySearch')
                         ->setParameter('KeySearch','%'.$keySearch.'%');
             };
+
             if($campus !== null){
                 $query =
                     $query->andWhere('sorties.siteOrganisateur = :campus')

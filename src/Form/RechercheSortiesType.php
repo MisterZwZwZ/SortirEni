@@ -106,6 +106,7 @@ class RechercheSortiesType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Sorties::class, //relie le formulaire à l'entity
+            'attr' => ["id" => "searchForm"],
         ]);
     }
 }

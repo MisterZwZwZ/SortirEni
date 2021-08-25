@@ -34,7 +34,7 @@
             </div>
             {{ form_end(form_accueil) }}
 
-            <div >
+            <div id="content">
                 <table class="table">
                     <thead>
                         <tr>
@@ -116,4 +116,4 @@
     </div>
 </div>
 {% endblock body%}
-
+{% block script %}<script src="{{ asset('js/ajaxSearch.js') }}"></script>{% endblock %}

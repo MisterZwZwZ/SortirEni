@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
 use App\Entity\Sorties;
 use App\Entity\User;
 use App\Repository\SortiesRepository;
@@ -11,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use function Faker\Provider\DateTime;
 use function Sodium\add;
 
 /**
@@ -31,20 +34,97 @@ class DefaultController extends AbstractController
 
         //récupération des données envoyées par le navigateur et les transmet au formulaire
         $formSortie->handleRequest($request);
-//
 
         /** @var User $user */
         $user = $this->getUser();
+
         $dateDebRech = $formSortie->get('dateHeureDebutRecherche')->getData();
         $dateFinRech =$formSortie->get('dateFinRecherche')->getData();
         $keySearch =($formSortie->get('nomRecherche')->getData() === null?'':$formSortie->get('nomRecherche')->getData());
-        $Campus =$formSortie->get('campus')->getData();
+        $campus =$formSortie->get('campus')->getData();
+        $booleanOrganisateur = $formSortie->get('SortiesOrganisateurs')->getData()   ;
+        $booleanUserInscrit = $formSortie->get('SortiesInscrits')->getData()  ;
+        $booleanUserNonInscrit = $formSortie->get('SortiesNonInscrits')->getData()   ;
+        $booleanSortiesPassees = $formSortie->get('SortiesPassees')->getData()    ;
 
 
         $listeSorties = $entityManager->getRepository(Sorties::class)
-            ->findBySelect($formSortie, $user,$dateDebRech , $dateFinRech,$keySearch, $Campus);
+
+            ->findBySelect($user, $dateDebRech, $dateFinRech,$keySearch, $campus, $booleanOrganisateur, $booleanUserInscrit, $booleanUserNonInscrit, $booleanSortiesPassees);
+
+        // On vérifie si on a une requête Ajax
+        if($request->get('ajax')){
+
+            // On récupère les paramètres de la requête AJAX
+            $params = $request->get('recherche_sorties'); //le tableau de paramètres
+
+            // On va chercher l'objet Campus à partir de l'id récupéré en requête
+            $idCampus = $params['campus'];
+            $campus = $entityManager->getRepository(Campus::class) ->find($idCampus);
+
+            $keySearch = $params['nomRecherche'];
+
+            //Si le paramètre date est renseigné, on converti le Strings en date, sinon on l'initialise à null
+            if($params['dateHeureDebutRecherche'] == ""){
+                $dateDebRech = null;
+            }else{
+                $dateSortieStr = $params['dateHeureDebutRecherche'];
+                $dateDebRech = DateTime::createFromFormat('Y-m-d', $dateSortieStr);
+            }
+
+            if($params['dateFinRecherche'] == ""){
+                $dateFinRech = null;
+            }else{
+                $dateClotureStr = $params['dateFinRecherche'];
+                $dateFinRech = DateTime::createFromFormat('Y-m-d', $dateClotureStr);
+            }
 
 
+            // On vérifie que l'on a récupéré le checkbox cochée, sinon on l'initialise à false (car elle ne sera pas envoyée en param dans ce cas)
+            if( isset($params['SortiesOrganisateurs'])){
+                $booleanOrganisateur=$params['SortiesOrganisateurs'];
+            }else{
+                $booleanOrganisateur=false;
+            }
+
+            if( isset($params['SortiesInscrits'])) {
+                $booleanUserInscrit = $params['SortiesInscrits'];
+            }else{
+                $booleanUserInscrit = false;
+            }
+
+            if( isset($params['SortiesNonInscrits'])){
+                $booleanUserNonInscrit=$params['SortiesNonInscrits'];
+            }else{
+                $booleanUserNonInscrit = false;
+            }
+
+            if( isset($params['SortiesPassees'])){
+                $booleanSortiesPassees=$params['SortiesPassees'];
+            }else{
+                $booleanSortiesPassees = false;
+            }
+
+            // on lance la requête en BDD pour récupérer les données
+            $listeSorties = $entityManager->getRepository(Sorties::class)
+                ->findBySelect($user,
+                    $dateDebRech,
+                    $dateFinRech,
+                    $keySearch,
+                    $campus,
+                    $booleanOrganisateur,
+                    $booleanUserInscrit,
+                    $booleanUserNonInscrit,
+                    $booleanSortiesPassees);
+
+            // On revoit la reponse au format JSON
+            return new JsonResponse([
+                'content' => $this->renderView(
+                    'default/content.html.twig',
+                    ['listeSorties' => $listeSorties]
+                )
+            ]);
+        }
 
         return $this->render('default/accueil.html.twig',[
             'form_accueil'=>$formSortie->createView(),

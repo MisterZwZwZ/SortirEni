@@ -1,0 +1,73 @@
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom de la sortie</th>
+            <th>Date de la sortie</th>
+            <th>Clôture</th>
+            <th>Inscrits/Places</th>
+            <th>Etat</th>
+            <th>Inscrit</th>
+            <th>Organisateur</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sorties in listeSorties %}
+            <tr>
+
+                <td>{{ sorties.nom }}</td>
+                <td>{{ sorties.dateHeureDebut|date('m/d/y')}}</td>
+                <td>{{ sorties.dateLimiteInscription|date('m/d/y') }}</td>
+                <td>{{ sorties.listeDesInscrits | length }}/{{ sorties.nbIncriptionsMax }}</td>
+                <td>{{ sorties.etatSortie.libelle}}</td>
+
+                <td>
+                    {% set inscrit = 'false' %}
+                    {% for userInscrit in sorties.listeDesInscrits %}
+                        {% if userInscrit.id == app.user.id %}
+                            {% set inscrit = 'true' %}
+                            X
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ sorties.organisateur.pseudo}}</td>
+                <td>
+                    {# test a effacer #}
+                    {#                                id de sortie :#}
+                    {#                                {{ sorties.id }}#}
+                    {#                                id utilisateur :#}
+                    {#                                {{ app.user.id }}#}
+                    {# endtest a effacer #}
+                    {% if date() <= sorties.dateLimiteInscription %}
+                        {% if sorties.etatSortie.getId != 6 %}
+                            {% with %}
+                                {% if sorties.listeDesInscrits|length < sorties.nbIncriptionsMax %}
+                                    {% if inscrit == 'true' %}
+                                        <a href={{ url('default_desinscription',{'id': sorties.id }) }}>Se désinscrire -</a>
+                                    {% else %}
+                                        <a href={{ url('default_inscription',{'id': sorties.id }) }}>S'incrire -</a>
+                                    {% endif %}
+                                {% else %}
+                                    Complet -
+                                {% endif %}
+                            {% endwith %}
+                        {% endif %}
+                    {% endif %}
+                    <a href="{{ path('sortie_edit', {'id':sorties.id}) }}">Modifier -</a>
+
+                    {% if app.user.id == sorties.organisateur.id %}
+                        {#         Vérifie que l'état de la sortie est annulable ('etat=ouverte ou Cloturée') #}
+                        {% if sorties.etatSortie.getId == 2 or sorties.etatSortie.getId == 3 %}
+                            <a href="{{ path('sortie_annuler', {'id': sorties.id }) }}">Annuler -</a>
+                        {% endif %}
+                    {% endif %}
+                    <a href="{{ path('sortie_show',{'id': sorties.id}) }}">Afficher</a>
+                    {#                    {% endif %}#}
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
