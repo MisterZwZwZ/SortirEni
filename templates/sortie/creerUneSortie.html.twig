@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
     {% block title %}{{title}}{% endblock %}
+    {% block title_2 %}{{ title }}{% endblock title_2 %}
     {% block body %}
-        <div class="p-3">
-            <div class="card border-primary mb-3">
-                <div class="card-header">{{ title }}</div>
-                <div class="card-body">
+{#        <div class="p-3">#}
+{#            <div class="card border-primary mb-3">#}
+{#                <div class="card-header">{{ title }}</div>#}
+{#                <div class="card-body">#}
                     {{ form_start(sortieForm) }}
                     <div class="row">
                         <div class="col-md-6">
@@ -45,7 +46,7 @@
                     <button name="btn-creer" type="submit" class="btn btn-primary mx-4" value="annuler">Annuler</button>
                     </div>
                     {{ form_end(sortieForm) }}
-                </div>
-            </div>
-        </div>
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
     {% endblock %}

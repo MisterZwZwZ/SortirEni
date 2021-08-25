@@ -36,15 +36,15 @@ class SortiesRepository extends ServiceEntityRepository
         /**
      * @param FormInterface $form
      * @param User|null $user
-     * @param DateTimeInterface|null $dateSortie
-     * @param DateTimeInterface|null $dateCloture
+     * @param DateTimeInterface|null $dateDebRech
+     * @param DateTimeInterface|null $dateFinRech
      * @param string|null $keySearch
      * @param Campus|null $campus
      * @return int|mixed|string
      * Return les éléments en fonctions de la selection des checkboxs de la page d'accueil
      */
     public function findBySelect(FormInterface      $form, ?User $user,
-                                 ?DateTimeInterface $dateSortie,?DateTimeInterface $dateCloture,
+                                 ?DateTimeInterface $dateDebRech, ?DateTimeInterface $dateFinRech,
                                  ?string            $keySearch, ?Campus $campus
     ){
 
@@ -64,17 +64,23 @@ class SortiesRepository extends ServiceEntityRepository
         //Création de la requête de base
              $query = $this->createQueryBuilder('sorties')
                  ->orderBy('sorties.dateLimiteInscription', 'DESC');
-
-             if($dateSortie !== null){
+            dump($dateDebRech);
+             if($dateDebRech !== null){
                  $query =
-                     $query->andWhere(':dateSortieSaisie < sorties.dateLimiteInscription')
-                     ->setParameter('dateSortieSaisie',$dateSortie );
+                     $query->andWhere(':dateDebRecherche < sorties.dateLimiteInscription')
+                     ->setParameter('dateDebRecherche',$dateDebRech );
+
+
              };
-            if($dateCloture !== null){
+
+//        dump($dateSortie);
+            if($dateFinRech !== null){
                 $query =
-                    $query->andWhere('sorties.dateLimiteInscription < :dateClotureSaisie')
-                    ->setParameter('dateSortieSaisie', $dateCloture);
+                    $query->andWhere('sorties.dateLimiteInscription < :dateFinRecherche')
+                    ->setParameter('dateFinRecherche', $dateFinRech);
             };
+
+
             if($keySearch !== null){
                 $query =
                     $query->andWhere('sorties.nom LIKE :KeySearch')
@@ -96,7 +102,6 @@ class SortiesRepository extends ServiceEntityRepository
 
             //sorties auxquelles l'user est inscrit
             if ($booleanUserInscrit && ($booleanUserInscrit !== $booleanUserNonInscrit)) {
-//                $query = $this->createQueryBuilder('sorties')
                 $query = $query->innerJoin('sorties.listeDesInscrits', 'li', 'WITH',
                     'li = :user')
                     ->setParameter('user', $user);
@@ -105,16 +110,36 @@ class SortiesRepository extends ServiceEntityRepository
 
             //sorties auxquelles l'user n'est pas inscrit
             if ($booleanUserNonInscrit && ($booleanUserInscrit !== $booleanUserNonInscrit)) {
-                $queryIns = $this->createQueryBuilder('sortiesIns')
-                    ->innerJoin('sortiesIns.listeDesInscrits', 'li', 'WITH',
-                        'li = :user')
+//                $queryIns = $this->createQueryBuilder('sortiesIns')
+//                    ->innerJoin('sortiesIns.listeDesInscrits', 'li', 'WITH',
+//                        'li = :user')
+//                    ->setParameter('user', $user)
+//                    ->getQuery()->getResult();
+//                dump($queryIns);
+//
+//
+//                $query = $query->innerJoin('sorties.listeDesInscrits', 'li', 'WITH',
+//                    'li NOT IN (:sorties_user_inscrit)')
+//                    ->setParameter('sorties_user_inscrit', $queryIns);
+
+
+//                $queryIns = $this->createQueryBuilder('sortiesIns')
+//                    ->innerJoin('sortiesIns.listeDesInscrits', 'li', 'WITH',
+//                        'li = :user')
+//                    ->setParameter('user', $user)
+//                    ->getQuery()->getResult();
+//                dump($queryIns);
+//                $query->andWhere('sorties.id NOT IN (:sorties_user_inscrit)')->setParameter('sorties_user_inscrit', $queryIns);
+
+
+
+
+                $query = $query->andWhere(
+                   ':user NOT MEMBER OF sorties.listeDesInscrits')
                     ->setParameter('user', $user)
-                    ->getQuery()->getResult();
+                   ;
 
-                $query = $query->innerJoin('sorties.listeDesInscrits', 'li', 'WITH',
-                    'li NOT IN (:sorties_user_inscrit)')
-                    ->setParameter('sorties_user_inscrit', $queryIns);
-
+//                dump($query->getDQL());
             }
             if ($booleanSortiesPassees) {
                 //sorties passées

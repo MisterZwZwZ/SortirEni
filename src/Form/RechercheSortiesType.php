@@ -35,13 +35,13 @@ class RechercheSortiesType extends AbstractType
             'label'=>'Campus',
             'required'=>false,
             'class'=> Campus::class,
-            'query_builder'=> function (CampusRepository $campusRepository){
-                return $campusRepository->createQueryBuilder('campus')
-                    ->andWhere('campus.id = :idCampusUser')
-                    ->setParameter('idCampusUser',$this->security->getUser()->getCampusUser()->getId())
-                    ->orderBy('campus.nomCampus','ASC');
-
-            },
+//            'query_builder'=> function (CampusRepository $campusRepository){
+//                return $campusRepository->createQueryBuilder('campus')
+//                    ->andWhere('campus.id = :idCampusUser')
+//                    ->setParameter('idCampusUser',$this->security->getUser()->getCampusUser()->getId())
+//                    ->orderBy('campus.nomCampus','ASC');
+//
+//            },
             'choice_label'=>'nomCampus',
             'mapped'=>false,
 
@@ -59,6 +59,7 @@ class RechercheSortiesType extends AbstractType
             'label'=>'Entre :',
             'input'  => 'datetime_immutable',
             'widget' => 'single_text',
+
 //
         ]);
         $builder->add('dateFinRecherche',DateType::class,[
@@ -66,7 +67,8 @@ class RechercheSortiesType extends AbstractType
             'mapped'=>false,
             'label'=>'Et :',
             'input'  => 'datetime_immutable',
-            'widget' => 'single_text'
+            'widget' => 'single_text',
+
 
         ]);
         $builder->add('SortiesOrganisateurs', CheckboxType::class,[

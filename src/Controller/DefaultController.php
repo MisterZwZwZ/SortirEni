@@ -23,6 +23,8 @@ class DefaultController extends AbstractController
      */
     public function accueil(Request $request,EntityManagerInterface $entityManager): Response
     {
+//        //message flash test
+//        $this->addFlash('success', 'coucou');
 
         //création du formulaire
         $formSortie = $this->createForm('App\Form\RechercheSortiesType', null);
@@ -33,13 +35,14 @@ class DefaultController extends AbstractController
 
         /** @var User $user */
         $user = $this->getUser();
-        $dateSortie = $formSortie->get('dateHeureDebutRecherche')->getData();
-        $dateCloture =$formSortie->get('dateFinRecherche')->getData();
+        $dateDebRech = $formSortie->get('dateHeureDebutRecherche')->getData();
+        $dateFinRech =$formSortie->get('dateFinRecherche')->getData();
         $keySearch =($formSortie->get('nomRecherche')->getData() === null?'':$formSortie->get('nomRecherche')->getData());
         $Campus =$formSortie->get('campus')->getData();
 
+
         $listeSorties = $entityManager->getRepository(Sorties::class)
-            ->findBySelect($formSortie, $user,$dateSortie , $dateCloture,$keySearch, $Campus);
+            ->findBySelect($formSortie, $user,$dateDebRech , $dateFinRech,$keySearch, $Campus);
 
 
 

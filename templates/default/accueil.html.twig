@@ -1,10 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% block title_2 %} Filter les sorties {% endblock title_2 %}
+
 {% block body %}
-<div class="p-3 ">
-    <div class="border-primary card">
-    <div class="card-header" >Filter les sorties </div>
-        <div class="card-body">
 
             {{ form_start(form_accueil) }}
             <div class="row">
@@ -69,13 +67,14 @@
                                     {% endif %}
                                 {% endfor %}
                             </td>
-                            <td>{{ sorties.organisateur.pseudo}}</td>
+                            <td>  <a href="{{ path('profil_afficher', {'id': sorties.organisateur.id }) }}">{{ sorties.organisateur.pseudo}}</a></td>
                             <td>
                                 {# test a effacer #}
-                                    {#                                id de sortie :#}
-                                    {#                                {{ sorties.id }}#}
-                                    {#                                id utilisateur :#}
-                                    {#                                {{ app.user.id }}#}
+                                                                    id de sortie :
+                                                                    {{ sorties.id }}
+                                                                    id org :{{ sorties.organisateur.id }}
+                                                                    id utilisateur :
+                                                                    {{ app.user.id }}
                                 {# endtest a effacer #}
                                 {% if date() <= sorties.dateLimiteInscription %}
                                     {% if sorties.etatSortie.getId != 6 %}

@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil de {% endblock %}
-
+{#{% block title %} {% endblock %}#}
+{% block title_2 %}Profil de {{ profil.pseudo }}{% endblock title_2 %}
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    </style>
-    <h1>profil de {{ profil.pseudo }}</h1>
+{#    <style>#}
+{#        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }#}
+{#        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }#}
+{#    </style>#}
+{#    <h1>profil de {{ profil.pseudo }}</h1>#}
 
-<div class="example-wrapper">
+{#<div class="example-wrapper">#}
+<div>
     <div class="list-group">
 {#        <div class="list-group-item list-group-item-action active">Détails du souhait: {{ wish.id }}#}
 {#            {% if wish.user.id == app.user.id or is_granted("ROLE_ADMIN") %}#}
@@ -22,6 +23,11 @@
         <div class="list-group-item list-group-item-action">Email : {{ profil.email }}</div>
         <div class="list-group-item list-group-item-action">Campus : {{ profil.campusUser.nomCampus }}</div>
     </div>
-    <button type="submit" onclick="history.go(-1)" class="btn btn-lg btn-primary">Retour</button>
+    <div class="mt-3">
+
+        <button class="btn btn-primary"><a class="customize" href="{{ path('default_accueil') }}">Retour</a></button>
+
+{#        <button type="submit" href="{{ url('default_accueil') }}" class="btn btn-lg btn-primary">Retour</button>#}
+    </div>
 </div>
 {% endblock %}
