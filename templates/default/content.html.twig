@@ -33,12 +33,7 @@
                 </td>
                 <td>{{ sorties.organisateur.pseudo}}</td>
                 <td>
-                    {# test a effacer #}
-                    {#                                id de sortie :#}
-                    {#                                {{ sorties.id }}#}
-                    {#                                id utilisateur :#}
-                    {#                                {{ app.user.id }}#}
-                    {# endtest a effacer #}
+
                     {% if date() <= sorties.dateLimiteInscription %}
                         {% if sorties.etatSortie.getId != 6 %}
                             {% with %}

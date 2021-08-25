@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {#{% block title %} {% endblock %}#}
+{% block taille %}w-50{% endblock taille %}
 {% block title_2 %}Profil de {{ profil.pseudo }}{% endblock title_2 %}
 {% block body %}
 {#    <style>#}
@@ -11,7 +12,7 @@
 
 {#<div class="example-wrapper">#}
 <div>
-    <div class="list-group">
+    <div>
 {#        <div class="list-group-item list-group-item-action active">Détails du souhait: {{ wish.id }}#}
 {#            {% if wish.user.id == app.user.id or is_granted("ROLE_ADMIN") %}#}
 {#                (<a style="color:white" href="{{ url('wish_edit', {"id": wish.id }) }}">Edit</a> - <a style="color:white" href="{{ url('wish_remove', {"id": wish.id }) }}">Supprimer</a>)#}

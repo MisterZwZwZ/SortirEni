@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
-    {% block title %}Afficher une sortie{% endblock %}
+    {% block title_2 %}Afficher une sortie{% endblock title_2%}
     {% block body %}
-        <div class="p-3">
-            <div class="card border-primary mb-3">
-                <div class="card-header">Afficher une sortie</div>
-                    <div class="row card-body">
+{#        <div class="p-3">#}
+{#            <div class="card border-primary mb-3">#}
+{#                <div class="card-header">Afficher une sortie</div>#}
+                    <div class="row">
                         <div class="row col-md-6">
                             <label class="col-md-5">Nom de la sortie :</label><p class="col-md-7">{{ sortie.nom }}</p>
                             <label class="col-md-5">Date et heure de la sortie :</label><p class="col-md-7">{{ sortie.dateHeureDebut | date('m/d/y') }}</p>
@@ -22,7 +22,7 @@
                             <label class="col-md-5">Longitude :</label><p class="col-md-7">{{ lieu.longitude }}</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
     {% endblock %}
