@@ -14,6 +14,7 @@
         {% endblock %}
     </head>
     <body>
+
         {% block header %}
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
@@ -51,32 +52,24 @@
                     </div>
                 </div>
             </nav>
-        <div class="p-3 ">
+        <div>
         {% endblock %}
-        {#            {% block flash %}#}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class=" alert alert-dismissible alert-{{ label }}">
                     {{ message }}
                 </div>
             {% endfor %}
-
         {% endfor %}
-        {#            {% endblock %}#}
         </div>
 
         <div class="p-3 d-flex justify-content-center">
-            <div class="border-primary card {% block taille %}{% endblock taille %} ">
-                <div class="card-header " >{% block title_2 %}  le titre {% endblock title_2 %}</div>
-                <div class="card-body ">
-
+            <div class="border-primary card {% block taille %}{% endblock taille %}">
+                <div class="card-header">{% block title_2 %}  le titre {% endblock title_2 %}</div>
+                <div class="card-body">
                     {% block body %}  Block Body  {% endblock %}
                 </div>
             </div>
         </div>
-
-        {% block script %}{% endblock %}
-
-
     </body>
 </html>

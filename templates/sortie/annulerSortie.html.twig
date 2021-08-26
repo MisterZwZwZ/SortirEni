@@ -1,27 +1,24 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Annuler une sortie{% endblock %}
+{% block title_2 %}Annuler une sortie{% endblock title_2 %}
+{% block taille %}w-50{% endblock taille %}
 {% block body %}
-<div>
-    <h1>Annuler une sortie</h1>
-    <div>
-        Nom de la sortie : {{ sortie.nom }}
+<div class=" d-flex justify-content-center">
+    <div class="row w-75 my-1">
+        <label class="col-md-4 my-1">Nom de la sortie :</label><p class="col-md-8 my-1">{{ sortie.nom }}</p>
+        <label class="col-md-4 my-1">Date de la sortie :</label><p class="col-md-8 my-1">{{ sortie.dateHeureDebut | date('m/d/y') }}</p>
+        <label class="col-md-4 my-1">Campus :</label><p class="col-md-8 my-1">{{ sortie.siteOrganisateur.nomCampus }}</p>
+        <label class="col-md-4 my-1">Lieu :</label><p class="col-md-8 my-1">{{ sortie.lieu.nom }}{{ sortie.lieu.rue }}</p>
+        <label class="col-md-4"></label><p class="col-md-8"> {{ sortie.lieu.ville.codePostal }} {{ sortie.lieu.ville.nom }}</p>
+        <div class="row my-1">
+            {{ form_start(form) }}
+            {{ form_row(form.motif) }}
+            <div class="d-flex justify-content-center my-3">
+                <button type="submit" class="btn btn-primary mx-4">Enregistrer</button>
+                <button class="btn btn-primary mx-4"><a class="customize" href="{{ path('default_accueil') }}">Annuler</a></button>
+            </div>
+            {{ form_end(form) }}
+        </div>
     </div>
-    <div>
-        Date de la sortie : {{ sortie.dateHeureDebut|date("m/d/Y") }}
-    </div>
-    <div>
-        Campus : {{ sortie.siteOrganisateur.nomCampus }}
-    </div>
-    <div>
-        Lieu : {{ sortie.lieu.rue }},{{ sortie.lieu.ville.codePostal }} {{ sortie.lieu.ville.nom }}
-    </div>
-    <div>
-        {{ form_start(form) }}
-        <button type="submit" class="btn btn-primary mx-4">Enregistrer</button>
-{#        <button class="p-1 btn btn-primary"><a class="nav-link p-0" href="{{ path('default_accueil') }}">Annuler</a></button>#}
-        <button class="btn btn-primary mx-4"><a class="customize" href="{{ path('default_accueil') }}">Annuler</a></button>
-        {{ form_end(form) }}
-    </div>
-
 </div>
 {% endblock body %}

@@ -1,15 +1,14 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Inscription{% endblock title %}
 {% block title_2 %}Inscription{% endblock title_2 %}
 {% block taille %}w-50{% endblock taille %}
 
 {% block body %}
-    <h1>Inscription</h1>
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_widget(registrationForm)}}
-
-        <button type="submit" class="btn btn-lg btn-primary">Inscription</button>
+        <button type="submit" class="btn btn-primary my-2">Inscription</button>
     {{ form_end(registrationForm) }}
+
 {% endblock %}

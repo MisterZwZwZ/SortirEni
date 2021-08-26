@@ -60,7 +60,7 @@ class Sorties
      * @var int|null
      * @Assert\NotBlank(message="Ce champ est obligatoire")
      */
-    private int $duree;
+    private ?int $duree;
 
     /**
      * @ORM\Column(type="integer")

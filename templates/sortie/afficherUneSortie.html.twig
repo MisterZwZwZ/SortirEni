@@ -1,28 +1,24 @@
 {% extends 'base.html.twig' %}
-    {% block title_2 %}Afficher une sortie{% endblock title_2%}
+{% block title %}Afficher une sortie{% endblock %}
+{% block title_2 %}Afficher une sortie{% endblock title_2 %}
+{% block taille %}w-75{% endblock taille %}
     {% block body %}
-{#        <div class="p-3">#}
-{#            <div class="card border-primary mb-3">#}
-{#                <div class="card-header">Afficher une sortie</div>#}
                     <div class="row">
                         <div class="row col-md-6">
-                            <label class="col-md-5">Nom de la sortie :</label><p class="col-md-7">{{ sortie.nom }}</p>
-                            <label class="col-md-5">Date et heure de la sortie :</label><p class="col-md-7">{{ sortie.dateHeureDebut | date('m/d/y') }}</p>
-                            <label class="col-md-5">Date limite d'inscription :</label><p class="col-md-7">{{ sortie.dateLimiteInscription |date('m/d/y')  }}</p>
-                            <label class="col-md-5">Nombre de place :</label><p class="col-md-7">{{ sortie.nbIncriptionsMax }}</p>
-                            <label class="col-md-5">Durée :</label><p class="col-md-7">{{ sortie.duree }} minutes</p>
-                            <label class="col-md-5">Description et infos :</label><p class="col-md-7">{{ sortie.infosSortie}}</p>
+                            <label class="col-md-5 my-2">Nom de la sortie :</label><p class="col-md-7 my-2">{{ sortie.nom }}</p>
+                            <label class="col-md-5 my-2">Date et heure de la sortie :</label><p class="col-md-7 my-2">{{ sortie.dateHeureDebut | date('m/d/y') }}</p>
+                            <label class="col-md-5 my-2">Date limite d'inscription :</label><p class="col-md-7 my-2">{{ sortie.dateLimiteInscription |date('m/d/y')  }}</p>
+                            <label class="col-md-5 my-2">Nombre de place :</label><p class="col-md-7 my-2">{{ sortie.nbIncriptionsMax }}</p>
+                            <label class="col-md-5 my-2">Durée :</label><p class="col-md-7 my-2">{{ sortie.duree }} minutes</p>
+                            <label class="col-md-5 my-2">Description et infos :</label><p class="col-md-7 my-2">{{ sortie.infosSortie}}</p>
                         </div>
                         <div class="row col-md-6">
-                            <label class="col-md-5">Campus :</label><p class="col-md-7">{{ campus.nomCampus }}</p>
-                            <label class="col-md-5">Lieu :</label><p class="col-md-7">{{ lieu.nom }}</p>
-                            <label class="col-md-5">Rue :</label><p class="col-md-7">{{ lieu.rue }}</p>
-                            <label class="col-md-5">Code postal :</label><p class="col-md-7">{{ ville.codePostal }}</p>
-                            <label class="col-md-5">Latitude :</label><p class="col-md-7">{{ lieu.latitude }}</p>
-                            <label class="col-md-5">Longitude :</label><p class="col-md-7">{{ lieu.longitude }}</p>
+                            <label class="col-md-5 my-2">Campus :</label><p class="col-md-7 my-2">{{ campus.nomCampus }}</p>
+                            <label class="col-md-5 my-2">Lieu :</label><p class="col-md-7 my-2">{{ lieu.nom }}</p>
+                            <label class="col-md-5 my-2">Rue :</label><p class="col-md-7 my-2">{{ lieu.rue }}</p>
+                            <label class="col-md-5 my-2">Code postal :</label><p class="col-md-7 my-2">{{ ville.codePostal }}</p>
+                            <label class="col-md-5 my-2">Latitude :</label><p class="col-md-7 my-2">{{ lieu.latitude }}</p>
+                            <label class="col-md-5 my-2">Longitude :</label><p class="col-md-7 my-2">{{ lieu.longitude }}</p>
                         </div>
                     </div>
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
     {% endblock %}

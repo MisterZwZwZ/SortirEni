@@ -45,31 +45,30 @@
                 <th>Organisateur</th>
                 <th>Actions</th>
             </tr>
-            </thead>
-            <tbody>
-            {% for sorties in listeSorties %}
-                <tr>
 
-                    <td>{{ sorties.nom }}</td>
-                    <td>{{ sorties.dateHeureDebut|date('m/d/y')}}</td>
-                    <td>{{ sorties.dateLimiteInscription|date('m/d/y') }}</td>
-                    <td>{{ sorties.listeDesInscrits | length }}/{{ sorties.nbIncriptionsMax }}</td>
-                    <td>{{ sorties.etatSortie.libelle}}</td>
-
-                    <td>
-                        {% set inscrit = 'false' %}
-                        {% for userInscrit in sorties.listeDesInscrits %}
-                            {% if userInscrit.id == app.user.id %}
-                                {% set inscrit = 'true' %}
-                                X
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>  <a href="{{ path('profil_afficher', {'id': sorties.organisateur.id }) }}">{{ sorties.organisateur.pseudo}}</a></td>
-                    <td>
-                        {% if date() <= sorties.dateLimiteInscription %}
-                            {% if sorties.etatSortie.getId != 6 %}
-                                {% with %}
+        </thead>
+        <tbody>
+        {% for sorties in listeSorties %}
+            <tr>
+                <td>{{ sorties.nom }}</td>
+                <td>{{ sorties.dateHeureDebut|date('m/d/y')}}</td>
+                <td>{{ sorties.dateLimiteInscription|date('m/d/y') }}</td>
+                <td>{{ sorties.listeDesInscrits | length }}/{{ sorties.nbIncriptionsMax }}</td>
+                <td>{{ sorties.etatSortie.libelle}}</td>
+                <td>
+                    {% set inscrit = 'false' %}
+                    {% for userInscrit in sorties.listeDesInscrits %}
+                        {% if userInscrit.id == app.user.id %}
+                            {% set inscrit = 'true' %}
+                            X
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>  <a href="{{ path('profil_afficher', {'id': sorties.organisateur.id }) }}">{{ sorties.organisateur.pseudo}}</a></td>
+                <td>
+                    {% if date() <= sorties.dateLimiteInscription %}
+                        {% if sorties.etatSortie.getId != 6 %}
+                            {% with %}
                                     {% if sorties.listeDesInscrits|length < sorties.nbIncriptionsMax %}
                                         {% if inscrit == 'true' %}
                                             <a href={{ url('default_desinscription',{'id': sorties.id }) }}>Se désinscrire -</a>
