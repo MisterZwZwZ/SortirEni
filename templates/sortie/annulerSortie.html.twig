@@ -16,8 +16,8 @@
             {{ form_start(form) }}
             {{ form_row(form.motif) }}
             <div class="d-flex justify-content-center my-3">
-                <button type="submit" class="btn btn-primary mx-4">Enregistrer</button>
-                <button class="btn btn-primary mx-4"><a class="customize" href="{{ path('default_accueil') }}">Annuler</a></button>
+                <button type="submit" class="btn btn-primary mx-4">Enregistrer <i class="fas fa-check"></i></button>
+                <button class="btn btn-primary mx-4"><a class="customize" href="{{ path('default_accueil') }}">retour <i class="fas fa-undo-alt"></i></a></button>
             </div>
             {{ form_end(form) }}
         </div>

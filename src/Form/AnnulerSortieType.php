@@ -19,7 +19,7 @@ class AnnulerSortieType extends AbstractType
     {
 
         $builder->add('motif', TextareaType::class,[
-                'required'=>false,
+                'required'=>true,
                 'mapped'=>false,
                 'label'=>'Motif :',
                 'constraints' => [

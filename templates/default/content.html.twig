@@ -1,18 +1,15 @@
-<div  id="content">
-    <table class="table">
+ <table class="table">
         <thead>
-        <tr class="table-dark">
-            <th>Nom de la sortie</th>
-            <th>Date de la sortie</th>
-            <th>Clôture</th>
-            <th>Inscrits/Places</th>
-            <th>Etat</th>
-            <th>Inscrit</th>
-            <th>Organisateur</th>
-            <th>Actions</th>
-        </tr>
-
-
+            <tr class="table-dark">
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture</th>
+                <th>Inscrits/Places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
         {% for sorties in listeSorties %}
@@ -27,19 +24,19 @@
             {% elseif  sorties.etatSortie.getId == 5 %}
                 <tr class="table-warning">
             {% elseif  sorties.etatSortie.getId == 6 %}
-                <tr class="table-warning">
+                <tr class="table-danger">
             {% endif %}
             <th scope="row">{{ sorties.nom }}</th>
             <td>{{ sorties.dateHeureDebut|date('d/m/y')}}</td>
             <td>{{ sorties.dateLimiteInscription|date('d/m/y') }}</td>
-            <td>{{ sorties.listeDesInscrits | length }}/{{ sorties.nbIncriptionsMax }}</td>
+            <td  class="d-flex justify-content-center">{{ sorties.listeDesInscrits | length }}/{{ sorties.nbIncriptionsMax }}</td>
             <td>{{ sorties.etatSortie.libelle}}</td>
             <td>
                 {% set inscrit = 'false' %}
                 {% for userInscrit in sorties.listeDesInscrits %}
                     {% if userInscrit.id == app.user.id %}
                         {% set inscrit = 'true' %}
-                        X
+                        <i class="fas fa-times d-flex justify-content-center"></i>
                     {% endif %}
                 {% endfor %}
             </td>
@@ -51,20 +48,22 @@
                             {% if sorties.listeDesInscrits|length < sorties.nbIncriptionsMax %}
                                 {% if inscrit == 'true' %}
                                     <a href={{ url('default_desinscription',{'id': sorties.id }) }}>Se désinscrire -</a>
-                                {% else %}
+                                {% elseif inscrit == 'false' %}
                                     <a href={{ url('default_inscription',{'id': sorties.id }) }}>S'incrire -</a>
                                 {% endif %}
-                            {% else %}
+                            {% endif %}
+                            {% if sorties.listeDesInscrits|length == sorties.nbIncriptionsMax %}
                                 Complet -
+                                {% if inscrit == 'true' %}
+                                    <a href={{ url('default_desinscription',{'id': sorties.id }) }}>Se désinscrire -</a>
+                                {% endif %}
                             {% endif %}
                         {% endwith %}
                     {% endif %}
                 {% endif %}
                 {% if app.user.id == sorties.organisateur.id %}
-                    <a href="{{ path('sortie_edit', {'id':sorties.id}) }}">Modifier -</a>
-                {% endif %}
-                {% if app.user.id == sorties.organisateur.id %}
                     {% if sorties.etatSortie.getId == 2 or sorties.etatSortie.getId == 3 %}
+                        <a href="{{ path('sortie_edit', {'id':sorties.id}) }}">Modifier -</a>
                         <a href="{{ path('sortie_annuler', {'id': sorties.id }) }}">Annuler -</a>
                     {% endif %}
                 {% endif %}
@@ -73,5 +72,4 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-</div>
+</table>

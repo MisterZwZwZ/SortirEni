@@ -9,8 +9,8 @@
     {{ form_start(userForm) }}
         {{ form_widget(userForm) }}
     <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary my-3 mx-5">Enregistrer</button>
-        <button class="btn btn-primary my-3 mx-5"><a class="customize" href="{{ path('default_accueil') }}">Retour</a></button>
+        <button type="submit" class="btn btn-primary my-3 mx-5">Enregistrer <i class="fas fa-check"></i></button>
+        <button class="btn btn-primary my-3 mx-5"><a class="customize" href="{{ path('default_accueil') }}">Retour <i class="fas fa-undo-alt"></i></a></button>
     </div>
     {{ form_end(userForm) }}
 

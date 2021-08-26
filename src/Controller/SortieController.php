@@ -25,16 +25,14 @@ class SortieController extends AbstractController
     public function gestionSortie(Sorties $sortie = null,Request $request, EntityManagerInterface $entityManager)
     {
         //Variable pour détecter le mode edit
-        $edit = false;
         $btnEnregistrer = 1;
+        $btnPublier = 0;
         //Test et ajout de champs selon la route new ou edit
         if (!$sortie) {
             $sortie = new Sorties();
             $title = 'Créer une sortie';
             $btnPublier = 1;
-
         } else {
-            $edit = true;
             $title = 'Modifier une sortie';
             if ($sortie->getEtatSortie()->getId() === 1){
                 $btnPublier = 1;
@@ -44,7 +42,6 @@ class SortieController extends AbstractController
             elseif($sortie->getEtatSortie()->getId()){
                 $btnPublier = 0;
             }
-
         }
 
         //Ajout du site oragnisateur et de l'organisateur
@@ -142,18 +139,18 @@ class SortieController extends AbstractController
             if($form->isSubmitted() && $form->isValid()){
                 $sorties->setEtatSortie($entityManager->getRepository('App:Etats')->find(6));
 
-                //            dump($form->get('motif')->getData());
-                //            exit();
                 $motif = "Sortie ANNULEE - ".$form->get('motif')->getData();
                 $sorties->setInfosSortie($motif);
 
                 $entityManager->persist($sorties);
                 $entityManager->flush();
 
+                $this->addFlash('success', 'La sortie a bien été annulée');
+
                 return $this->redirectToRoute('default_accueil');
             }
             else{
-                $this->addFlash('warning', 'la sortie ne peut être annulée. veuillez la publier d\'abord');
+                $this->addFlash('warning', 'Pour que la sortie puisse être annulée, il faut d\'abord rédiger un motif');
             }
 
         return $this->render('sortie/annulerSortie.html.twig',

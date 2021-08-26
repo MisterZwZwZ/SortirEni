@@ -1,3 +1,6 @@
+
+
+
 window.onload = () => {
     const FiltersForm = document.querySelector("#searchForm");
 

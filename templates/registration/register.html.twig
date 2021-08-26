@@ -9,7 +9,14 @@
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_widget(registrationForm)}}
-        <button type="submit" class="btn btn-primary my-2">Inscription</button>
+        <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary my-3 mx-5">Inscription <i class="fas fa-check"></i></button>
+                    <button class="btn btn-primary my-3 mx-5"><a class="customize" href="{{ path('default_accueil') }}">retour <i class="fas fa-undo-alt"></i></a></button>
+        </div>
     {{ form_end(registrationForm) }}
+
+
+
+
 
 {% endblock %}

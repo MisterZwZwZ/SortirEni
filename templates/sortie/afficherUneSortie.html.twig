@@ -7,20 +7,20 @@
 {% block body %}
                 <div class="row">
                     <div class="row col-md-6">
-                        <label class="col-md-5 my-2">Nom de la sortie :</label><p class="col-md-7 my-2">{{ sortie.nom }}</p>
-                        <label class="col-md-5 my-2">Date et heure de la sortie :</label><p class="col-md-7 my-2">{{ sortie.dateHeureDebut | date('m/d/y') }}</p>
-                        <label class="col-md-5 my-2">Date limite d'inscription :</label><p class="col-md-7 my-2">{{ sortie.dateLimiteInscription |date('m/d/y')  }}</p>
-                        <label class="col-md-5 my-2">Nombre de place :</label><p class="col-md-7 my-2">{{ sortie.nbIncriptionsMax }}</p>
-                        <label class="col-md-5 my-2">Durée :</label><p class="col-md-7 my-2">{{ sortie.duree }} minutes</p>
-                        <label class="col-md-5 my-2">Description et infos :</label><p class="col-md-7 my-2">{{ sortie.infosSortie}}</p>
+                        <label class="col-md-6 my-2"><strong> Nom de la sortie :</strong></label><p class="col-md-6 my-2">{{ sortie.nom }}</p>
+                        <label class="col-md-6 my-2"><strong> Date et heure de la sortie :</strong></label><p class="col-md-6 my-2">{{ sortie.dateHeureDebut | date('m/d/y') }}</p>
+                        <label class="col-md-6 my-2"><strong> Date limite d'inscription :</strong></label><p class="col-md-6 my-2">{{ sortie.dateLimiteInscription |date('m/d/y')  }}</p>
+                        <label class="col-md-6 my-2"><strong> Nombre de place :</strong></label><p class="col-md-6 my-2">{{ sortie.nbIncriptionsMax }}</p>
+                        <label class="col-md-6 my-2"><strong> Durée :</strong></label><p class="col-md-6 my-2">{{ sortie.duree }} minutes</p>
+                        <label class="col-md-6 my-2"><strong> Description et infos :</strong></label><p class="col-md-6 my-2">{{ sortie.infosSortie}}</p>
                     </div>
                     <div class="row col-md-6">
-                        <label class="col-md-5 my-2">Campus :</label><p class="col-md-7 my-2">{{ campus.nomCampus }}</p>
-                        <label class="col-md-5 my-2">Lieu :</label><p class="col-md-7 my-2">{{ lieu.nom }}</p>
-                        <label class="col-md-5 my-2">Rue :</label><p class="col-md-7 my-2">{{ lieu.rue }}</p>
-                        <label class="col-md-5 my-2">Code postal :</label><p class="col-md-7 my-2">{{ ville.codePostal }}</p>
-                        <label class="col-md-5 my-2">Latitude :</label><p class="col-md-7 my-2">{{ lieu.latitude }}</p>
-                        <label class="col-md-5 my-2">Longitude :</label><p class="col-md-7 my-2">{{ lieu.longitude }}</p>
+                        <label class="col-md-5 my-2"><strong> Campus :</strong></label><p class="col-md-7 my-2">{{ campus.nomCampus }}</p>
+                        <label class="col-md-5 my-2"><strong> Lieu :</strong></label><p class="col-md-7 my-2">{{ lieu.nom }}</p>
+                        <label class="col-md-5 my-2"><strong> Rue :</strong></label><p class="col-md-7 my-2">{{ lieu.rue }}</p>
+                        <label class="col-md-5 my-2"><strong> Code postal :</strong></label><p class="col-md-7 my-2">{{ ville.codePostal }}</p>
+                        <label class="col-md-5 my-2"><strong> Latitude :</strong></label><p class="col-md-7 my-2">{{ lieu.latitude }}</p>
+                        <label class="col-md-5 my-2"><strong> Longitude :</strong></label><p class="col-md-7 my-2">{{ lieu.longitude }}</p>
                     </div>
                     <div class="row mt-5 mb-3">
                         <div class="col-9">
@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-3 d-flex justify-content-center">
                             <div>
-                                <button name="btn-submit" type="submit" class="btn btn-primary" value="annuler">Annuler</button>
+                                <button class="btn btn-primary mx-4"><a class="customize" href="{{ path('default_accueil') }}">retour <i class="fas fa-undo-alt"></i></a></button>
                             </div>
                         </div>
                     </div>
