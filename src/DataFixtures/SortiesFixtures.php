@@ -8,6 +8,7 @@ use App\Entity\Etats;
 use App\Entity\Lieux;
 use App\Entity\User;
 use App\Entity\Villes;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
@@ -96,11 +97,11 @@ class SortiesFixtures extends Fixture
             for($m = 0; $m <=10 ; $m++){
                 $sorties[$m] = new Sorties();
                 $sorties[$m]->setNom($faker->lastName);
-                $sorties[$m]->setDateHeureDebut($faker->dateTime);
-                $sorties[$m]->setDateLimiteInscription($faker->dateTime);
+                $sorties[$m]->setDateHeureDebut((new DateTime())->modify('+'.(rand(0,6)-3).'DAY'));
+                $sorties[$m]->setDateLimiteInscription($sorties[$m]->getDateHeureDebut()->modify('+1 DAY'));
                 $sorties[$m]->setDuree($faker->numberBetween(30,120));
                 $sorties[$m]->setInfosSortie($faker->text);
-                $sorties[$m]->setEtatSortie($etats);
+                $sorties[$m]->setEtatSortie((rand(0,1)==1)?$etats2:$etats);
                 $sorties[$m]->setOrganisateur($users[rand(0,11)]);
                 $sorties[$m]->setSiteOrganisateur($campus[rand(0,2)]);
                 $sorties[$m]->setNbIncriptionsMax($faker->numberBetween(2,20));

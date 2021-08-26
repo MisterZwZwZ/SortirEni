@@ -57,6 +57,8 @@ class SortiesRepository extends ServiceEntityRepository
 
         //Création de la requête de base
              $query = $this->createQueryBuilder('sorties')
+                 ->andwhere('sorties.etatSortie != 1 OR (sorties.etatSortie = 1 AND sorties.organisateur = :userId)')
+                 ->setParameter('userId', $user->getId())
                  ->orderBy('sorties.dateLimiteInscription', 'DESC');
 
              if($dateDebRech !== null){

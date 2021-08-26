@@ -109,11 +109,12 @@ class Sorties
      * @ORM\ManyToOne(targetEntity=Etats::class, inversedBy="sortiesRattacheesEtat")
      * @ORM\JoinColumn(nullable=false)
      */
-    private Etats $etatSortie;
+    private ?Etats $etatSortie;
 
     public function __construct()
     {
         $this->listeDesInscrits = new ArrayCollection();
+
 
     }
 
