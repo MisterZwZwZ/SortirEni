@@ -69,7 +69,6 @@ class RechercheSortiesType extends AbstractType
             'input'  => 'datetime_immutable',
             'widget' => 'single_text',
 
-
         ]);
         $builder->add('SortiesOrganisateurs', CheckboxType::class,[
             'label'=>'Sorties dont je suis l\'organisateur(trice)',
@@ -95,11 +94,7 @@ class RechercheSortiesType extends AbstractType
             'required'=> false,
             'mapped'=>false,
         ]);
-        $builder->add('submit', SubmitType::class,[
-            'label'=>'Recherche'
-            ])
 
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

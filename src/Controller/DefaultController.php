@@ -68,15 +68,15 @@ class DefaultController extends AbstractController
             if($params['dateHeureDebutRecherche'] == ""){
                 $dateDebRech = null;
             }else{
-                $dateSortieStr = $params['dateHeureDebutRecherche'];
-                $dateDebRech = DateTime::createFromFormat('Y-m-d', $dateSortieStr);
+                $dateDebRechStr = $params['dateHeureDebutRecherche'];
+                $dateDebRech = DateTime::createFromFormat('Y-m-d', $dateDebRechStr);
             }
 
             if($params['dateFinRecherche'] == ""){
                 $dateFinRech = null;
             }else{
-                $dateClotureStr = $params['dateFinRecherche'];
-                $dateFinRech = DateTime::createFromFormat('Y-m-d', $dateClotureStr);
+                $dateFinRechStr = $params['dateFinRecherche'];
+                $dateFinRech = DateTime::createFromFormat('Y-m-d', $dateFinRechStr);
             }
 
 
