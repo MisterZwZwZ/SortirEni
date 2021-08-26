@@ -40,7 +40,7 @@
                                         <td>{{ inscrit.nom}}</td>
                                 {% else %}
                                     <tr class="table-default">
-                                        <td>{{ inscrit.pseudo }}</td>
+                                    <td>  <a href="{{ path('profil_afficher', {'id': inscrit.id }) }}">{{ inscrit.pseudo}}</a></td>
                                         <td>{{ inscrit.nom}}</td>
                                 {% endif %}
                                     </tr>
