@@ -96,7 +96,9 @@
                             {% endif %}
                         {% endif %}
                         {% if app.user.id == sorties.organisateur.id %}
-                            <a href="{{ path('sortie_edit', {'id':sorties.id}) }}">Modifier -</a>
+                            {% if sorties.etatSortie.id == 1 %}
+                                <a href="{{ path('sortie_edit', {'id':sorties.id}) }}">Modifier -</a>
+                            {% endif %}
                         {% endif %}
                         {% if app.user.id == sorties.organisateur.id %}
                             {% if sorties.etatSortie.getId == 2 or sorties.etatSortie.getId == 3 %}

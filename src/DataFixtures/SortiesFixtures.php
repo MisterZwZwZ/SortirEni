@@ -66,6 +66,16 @@ class SortiesFixtures extends Fixture
             $users[$i]->setCampusUser($campus[rand(0,2)]);
             $manager->persist($users[$i]);
         }
+        $admin = new User();
+        $admin->setNom('administrateur');
+        $admin->setPrenom('administrateur');
+        $admin->setPseudo('administrateur');
+        $admin->setTelephone('0321654987');
+        $admin->setEmail('administrateur@admin.com');
+        $admin->setPassword($this->passwordHasher->hashPassword($admin,'Test123!'));
+        $admin->setActif(true);
+        $admin->setCampusUser($campus[rand(0,2)]);
+        $manager->persist($admin);
 
 
             $etats = new Etats();

@@ -62,13 +62,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=30)
      *
      * @Assert\NotBlank(message="Le nom est requis !", groups={"register"})
-     * @Assert\Length(min=2, max=50, minMessage="Le nom doit contenir au minimum {{ limit }} caractères",
+     * @Assert\Length(min=2, max=30, minMessage="Le nom doit contenir au minimum {{ limit }} caractères",
      *     maxMessage="Le nom doit contenir au maximum {{ limit }} caractères", groups={"register"})
      * @Assert\Regex(
-     *     pattern="#^[A-Z][\p{L} -]*$#",
-     *     message="Carractères non-autorisés dans le nom",
-     *     groups={"register"}
-     * )
+     *        pattern="#^[\w'\-,.][^0-9_!¡?÷?¿\\+\/=@\#$%ˆ&*(,){}|~<>;:[\]]{2,}$#u",
+     *        message="Caractères non-autorisés dans le prenom",
+     *        groups={"register"}
+     *   )
      */
     private $nom;
 
@@ -76,13 +76,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=30)
      *
      * @Assert\NotBlank(message="Le prenom est requis !", groups={"register"})
-     * @Assert\Length(min=2, max=50, minMessage="Le prenom doit contenir au minimum {{ limit }} caractères",
+     * @Assert\Length(min=2, max=30, minMessage="Le prenom doit contenir au minimum {{ limit }} caractères",
      *      maxMessage="Le prenom doit contenir au maximum {{ limit }} caractères", groups={"register"})
      * @Assert\Regex(
-     *     pattern="#^[A-Z][\p{L} -]*$#",
-     *     message="Carractères non-autorisés dans le prenom",
-     *     groups={"register"}
-     * )
+     *        pattern="#^[\w'\-,.][^0-9_!¡?÷?¿\\+\/=@\#$%ˆ&*(,){}|~<>;:[\]]{2,}$#u",
+     *        message="Caractères non-autorisés dans le prenom",
+     *        groups={"register"}
+     *   )
      */
     private $prenom;
 
