@@ -62,7 +62,7 @@ class SortieController extends AbstractController
                 $entityManager->persist($sortie);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'La sortie a été créer avec succès');
+                $this->addFlash('success', 'La sortie a été créee avec succès');
 
                 return $this->redirectToRoute('default_accueil');
             }
@@ -75,7 +75,7 @@ class SortieController extends AbstractController
                 $entityManager->persist($sortie);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'La sortie a été publier avec succès');
+                $this->addFlash('success', 'La sortie a été publiée avec succès');
 
                 return $this->redirectToRoute('default_accueil');
             }

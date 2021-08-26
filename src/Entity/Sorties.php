@@ -32,10 +32,10 @@ class Sorties
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=30)
      * @Assert\NotBlank(message="Ce champ est obligatoire")
-     * @Assert\Length(min="8",
-     *                max="255",
+     * @Assert\Length(min="2",
+     *                max="30",
      *                minMessage="Le nom de la sortie doit faire au minimum 8 caractères",
      *                maxMessage="Le nom de la sortie doit faire au maximum 255 caractères")
      */
