@@ -24,7 +24,6 @@ class SortieController extends AbstractController
      */
     public function gestionSortie(Sorties $sortie = null,Request $request, EntityManagerInterface $entityManager)
     {
-        //Variable pour détecter le mode edit
         $btnEnregistrer = 1;
         $btnPublier = 0;
         //Test et ajout de champs selon la route new ou edit
@@ -103,8 +102,6 @@ class SortieController extends AbstractController
                 'btnEnregistrer' => $btnEnregistrer
             ]);
         }
-
-
     }
 
     /**
