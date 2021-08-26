@@ -109,11 +109,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank(message="Le pseudo est requis !", groups={"register"})
      * @Assert\Length(min=4, max=30, minMessage="Le pseudo doit contenir au minimum {{ limit }} caractères",
      *      maxMessage="Le pseudo doit contenir au maximum {{ limit }} caractères", groups={"register"})
-     * @Assert\Regex(
-     *     pattern="#^([a-zA-Z0-9-_]{4,30})$#",
-     *     message="Carractères non-autorisés dans le pseudo",
-     *     groups={"register"}
-     * )
      */
     private $pseudo;
 

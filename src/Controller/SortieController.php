@@ -26,20 +26,25 @@ class SortieController extends AbstractController
     {
         //Variable pour détecter le mode edit
         $edit = false;
-
+        $btnEnregistrer = 1;
         //Test et ajout de champs selon la route new ou edit
         if (!$sortie) {
             $sortie = new Sorties();
             $title = 'Créer une sortie';
             $btnPublier = 1;
+
         } else {
             $edit = true;
             $title = 'Modifier une sortie';
             if ($sortie->getEtatSortie()->getId() === 1){
                 $btnPublier = 1;
-            }elseif($sortie->getEtatSortie()->getId()){
+            }elseif($sortie->getEtatSortie()->getId() !== 1){
+                 $btnEnregistrer = 0;
+            }
+            elseif($sortie->getEtatSortie()->getId()){
                 $btnPublier = 0;
             }
+
         }
 
         //Ajout du site oragnisateur et de l'organisateur
@@ -90,13 +95,15 @@ class SortieController extends AbstractController
                 'sortieForm' => $sortieForm->createView(),
                 'title' => $title,
                 'sortie' => $sortie,
-                'btnPublier' => $btnPublier
+                'btnPublier' => $btnPublier,
+                'btnEnregistrer' => $btnEnregistrer
             ]);
         }else{
             return $this->render('sortie/gestionUneSortie.html.twig', [
                 'sortieForm' => $sortieForm->createView(),
                 'title' => $title,
-                'btnPublier' => $btnPublier
+                'btnPublier' => $btnPublier,
+                'btnEnregistrer' => $btnEnregistrer
             ]);
         }
 
