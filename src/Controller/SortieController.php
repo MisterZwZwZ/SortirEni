@@ -129,7 +129,7 @@ class SortieController extends AbstractController
         $form = $this->createForm('App\Form\AnnulerSortieType',null);
         $form->handleRequest($request);
         //vérification que la sortie est publiée pour être annulée
-        if($sorties->getEtatSortie()===2 || $sorties->getEtatSortie()===3 )
+        if($sorties->getEtatSortie()->getId() == 2 || $sorties->getEtatSortie()->getId() == 3 )
             if($form->isSubmitted() && $form->isValid()){
                 $sorties->setEtatSortie($entityManager->getRepository('App:Etats')->find(6));
 

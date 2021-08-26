@@ -163,7 +163,7 @@ class DefaultController extends AbstractController
             $manager->flush();
 
         }else{
-            $this->addFlash('warning', 'Désolé la sortie est complète ou la période d\'inscritpion est cloturée');
+            $this->addFlash('warning', 'Désolé la sortie est complète ou l\'état de la sortie n\'est pas "ouverte"');
         }
 
         return $this->redirectToRoute('default_accueil');

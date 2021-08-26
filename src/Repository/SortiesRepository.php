@@ -60,6 +60,8 @@ class SortiesRepository extends ServiceEntityRepository
                  ->andwhere('sorties.etatSortie != 1 OR (sorties.etatSortie = 1 AND sorties.organisateur = :userId)')
                  ->setParameter('userId', $user->getId())
                  ->orderBy('sorties.dateLimiteInscription', 'DESC');
+//             dump($query->getQuery()->getResult());
+//             dump($user->getId());
 
              if($dateDebRech !== null){
                  $query =
@@ -138,16 +140,14 @@ class SortiesRepository extends ServiceEntityRepository
             if ($booleanSortiesPassees) {
                 //sorties passées
                 $query =
-                    $query->andWhere(':dateNow > sorties.dateLimiteInscription')
-                        ->setParameter('dateNow', new DateTime());
+                    $query->andWhere('sorties.etatSortie > 4');
+
             }else{
                 //sorties actuelles
                 $query =
-                    $query->andWhere(':dateNow < sorties.dateLimiteInscription')
-                        ->setParameter('dateNow', new DateTime());
+                    $query->andWhere('sorties.etatSortie <= 4');
 
-//                dump($query->getQuery()->getResult());
-//                exit();
+
             }
 
         return $query->getQuery()->getResult();
