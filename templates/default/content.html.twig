@@ -1,7 +1,7 @@
 <div>
     <table class="table">
         <thead>
-        <tr>
+        <tr class="table-dark">
             <th>Nom de la sortie</th>
             <th>Date de la sortie</th>
             <th>Clôture</th>
@@ -14,8 +14,20 @@
         </thead>
         <tbody>
         {% for sorties in listeSorties %}
-            <tr>
-                <td>{{ sorties.nom }}</td>
+                {% if  sorties.etatSortie.getId == 1 %}
+                    <tr class="table-default">
+                {% elseif  sorties.etatSortie.getId == 2 %}
+                    <tr class="table-success">
+                {% elseif  sorties.etatSortie.getId == 3 %}
+                    <tr class="table-danger">
+                {% elseif  sorties.etatSortie.getId == 4 %}
+                    <tr class="table-info">
+                {% elseif  sorties.etatSortie.getId == 5 %}
+                    <tr class="table-warning">
+                {% elseif  sorties.etatSortie.getId == 6 %}
+                    <tr class="table-warning">
+                {% endif %}
+                <th scope="row">{{ sorties.nom }}</th>
                 <td>{{ sorties.dateHeureDebut|date('m/d/y')}}</td>
                 <td>{{ sorties.dateLimiteInscription|date('m/d/y') }}</td>
                 <td>{{ sorties.listeDesInscrits | length }}/{{ sorties.nbIncriptionsMax }}</td>
@@ -32,7 +44,6 @@
                 </td>
                 <td>{{ sorties.organisateur.pseudo}}</td>
                 <td>
-
                     {% if date() <= sorties.dateLimiteInscription %}
                         {% if sorties.etatSortie.getId != 6 %}
                             {% with %}

@@ -11,6 +11,7 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
             <script src="{{ asset('js/app.js') }}"></script>
+            <script src="https://kit.fontawesome.com/cfc8d28da2.js" crossorigin="anonymous"></script>
         {% endblock %}
     </head>
     <body>
@@ -25,7 +26,7 @@
 
                     <div class="collapse navbar-collapse" id="navbarColor02">
                         {% if app.user %}
-                        <ul class="navbar-nav me-auto d-flex justify-content-end">
+                        <ul class="navbar-nav me-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('default_accueil') }}">Accueil</a>
                             </li>
@@ -35,41 +36,43 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('sortie_new', {"id":app.user.id})}}">Créer une sortie</a>
                             </li>
-                            <li class="nav-item">
-                                <p class="nav-link"> Connecté en tant que {{ app.user.pseudo }}</p>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('app_logout') }}">Se déconnecter</a>
-                            </li>
                             {% if is_granted("ROLE_ADMIN") %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('app_register') }}">Inscrire un utilisateur</a>
                                 </li>
                             {% endif %}
                         </ul>
+                        <p>
+                            <a id="deconexion" class="nav-link" href="{{ url('app_logout') }}">
+                                <i class="far fa-times-circle"></i>
+                            </a>
+                        </p>
+                        <p>Connecté en tant que <strong>{{ app.user.pseudo }}</strong></p>
                         {% endif %}
 
                     </div>
                 </div>
             </nav>
-        <div>
+        <div class="d-flex justify-content-center">
         {% endblock %}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class=" alert alert-dismissible alert-{{ label }}">
+                <div class=" alert alert-dismissible alert-{{ label }} {% block taille %}{% endblock taille %} m-3">
                     {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             {% endfor %}
         {% endfor %}
         </div>
 
         <div class="p-3 d-flex justify-content-center">
-            <div class="border-primary card {% block taille %}{% endblock taille %}">
+            <div class="border-primary card {% block taille2 %}{% endblock taille2 %}">
                 <div class="card-header">{% block title_2 %}  le titre {% endblock title_2 %}</div>
                 <div class="card-body">
                     {% block body %}  Block Body  {% endblock %}
                 </div>
             </div>
         </div>
+        {% block script %}{% endblock %}
     </body>
 </html>

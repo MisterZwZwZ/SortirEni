@@ -1,36 +1,40 @@
 {% extends 'base.html.twig' %}
-    {% block title %}{{title}}{% endblock %}
-    {% block title_2 %}{{title}}{% endblock title_2 %}
-    {% block taille %}w-75{% endblock taille %}
-    {% block body %}
-         {{ form_start(sortieForm) }}
-         <div class="row">
-             <div class="col-md-6">
-                 {{ form_row(sortieForm.nom) }}
-                 {{ form_row(sortieForm.dateHeureDebut) }}
-                 {{ form_row(sortieForm.dateLimiteInscription) }}
-                 {{ form_row(sortieForm.nbIncriptionsMax) }}
-                 {{ form_row(sortieForm.duree) }}
-                 {{ form_row(sortieForm.infosSortie) }}
-             </div>
-             <div class="col-md-6">
-                 {{ form_row(sortieForm.campus) }}
-                 {{ form_row(sortieForm.villes) }}
-                 {{ form_row(sortieForm.lieu) }}
-             </div>
-         </div>
-         <div class="row p-4">
-             <div class="col d-flex justify-content-center p-3">
-                 <button name="btn-submit" type="submit" class="btn btn-primary mx-4" value="creer">Enregistrer</button>
-             </div>
-             {% if btnPublier == 1 %}
-                 <div class="col d-flex justify-content-center p-3">
-                     <button name="btn-submit" type="submit" class="btn btn-primary mx-4" value="publier">Publier la sortie</button>
-                 </div>
-             {% endif %}
-             <div class="col d-flex justify-content-center p-3">
-                 <button name="btn-submit" type="submit" class="btn btn-primary mx-4" value="annuler">Annuler</button>
-             </div>
-         </div>
-         {{ form_end(sortieForm) }}
-    {% endblock %}
+{% block title %}{{title}}{% endblock %}
+{% block title_2 %}{{title}}{% endblock title_2 %}
+{% block taille %}w-75{% endblock taille %}
+{% block taille2 %}w-75{% endblock taille2 %}
+
+{% block body %}
+
+    {{ form_start(sortieForm) }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(sortieForm.nom) }}
+            {{ form_row(sortieForm.dateHeureDebut) }}
+            {{ form_row(sortieForm.dateLimiteInscription) }}
+            {{ form_row(sortieForm.nbIncriptionsMax) }}
+            {{ form_row(sortieForm.duree) }}
+            {{ form_row(sortieForm.infosSortie) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(sortieForm.campus) }}
+            {{ form_row(sortieForm.villes) }}
+            {{ form_row(sortieForm.lieu) }}
+        </div>
+    </div>
+    <div class="row p-4">
+        <div class="col d-flex justify-content-center p-3">
+            <button name="btn-submit" type="submit" class="btn btn-primary mx-4" value="creer">Enregistrer</button>
+        </div>
+        {% if btnPublier == 1 %}
+            <div class="col d-flex justify-content-center p-3">
+                <button name="btn-submit" type="submit" class="btn btn-primary mx-4" value="publier">Publier la sortie</button>
+            </div>
+        {% endif %}
+        <div class="col d-flex justify-content-center p-3">
+            <button name="btn-submit" type="submit" class="btn btn-primary mx-4" value="annuler">Annuler</button>
+        </div>
+    </div>
+    {{ form_end(sortieForm) }}
+
+{% endblock %}

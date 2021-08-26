@@ -108,6 +108,7 @@ class SortieController extends AbstractController
      */
     public function show(Sorties $sortie, EntityManagerInterface $entityManager)
     {
+        $user = $this->getUser();
         $campus = $sortie->getSiteOrganisateur();
         $lieu = $sortie->getLieu();
         $ville = $lieu->getVille();
@@ -117,6 +118,7 @@ class SortieController extends AbstractController
             "campus" => $campus,
             "lieu" => $lieu,
             "ville" => $ville,
+            "user" => $user
         ]);
     }
 

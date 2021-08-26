@@ -26,9 +26,6 @@ class DefaultController extends AbstractController
      */
     public function accueil(Request $request,EntityManagerInterface $entityManager): Response
     {
-//        //message flash test
-//        $this->addFlash('success', 'coucou');
-
         //création du formulaire
         $formSortie = $this->createForm('App\Form\RechercheSortiesType', null);
 

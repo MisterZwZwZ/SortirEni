@@ -2,7 +2,10 @@
 .customize {
     text-decoration:none;
 }
- .customize:hover{
+.customize:hover{
      color: #FFFFFF;
- }
+}
+#deconexion{
+    color: #e83283!important;
 
+}

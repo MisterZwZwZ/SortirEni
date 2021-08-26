@@ -1,16 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title_2 %} Filter les sorties {% endblock title_2 %}
+{% block title %}Accueil{% endblock %}
+{% block title_2 %}Filtrer les sorties{% endblock title_2 %}
+{% block taille %}w-75{% endblock taille %}
+{% block taille2 %}w-75{% endblock taille2 %}
 
 {% block body %}
 
     {{ form_start(form_accueil) }}
-    <div class="row">
+    <div class="row mx-2">
 
-        <div class="col-5">
+        <div class="col-7">
             {{ form_row(form_accueil.campus) }}
             {{ form_row(form_accueil.nomRecherche) }}
-
             <div class="row">
                 <div class="col-6">
                     {{ form_row(form_accueil.dateHeureDebutRecherche) }}
@@ -19,11 +21,10 @@
                     {{ form_row(form_accueil.dateFinRecherche) }}
                 </div>
             </div>
-
         </div>
 
 
-        <div class="col-2 align-self-end">
+        <div class="col-5 align-self-end">
             {{ form_row(form_accueil.SortiesOrganisateurs) }}
             {{ form_row(form_accueil.SortiesInscrits) }}
             {{ form_row(form_accueil.SortiesNonInscrits) }}
@@ -35,7 +36,7 @@
     <div  id="content">
         <table class="table">
             <thead>
-            <tr>
+            <tr class="table-dark">
                 <th>Nom de la sortie</th>
                 <th>Date de la sortie</th>
                 <th>Clôture</th>
@@ -49,8 +50,20 @@
         </thead>
         <tbody>
         {% for sorties in listeSorties %}
-            <tr>
-                <td>{{ sorties.nom }}</td>
+                {% if  sorties.etatSortie.getId == 1 %}
+                    <tr class="table-default">
+                {% elseif  sorties.etatSortie.getId == 2 %}
+                    <tr class="table-success">
+                {% elseif  sorties.etatSortie.getId == 3 %}
+                    <tr class="table-danger">
+                {% elseif  sorties.etatSortie.getId == 4 %}
+                    <tr class="table-info">
+                {% elseif  sorties.etatSortie.getId == 5 %}
+                    <tr class="table-warning">
+                {% elseif  sorties.etatSortie.getId == 6 %}
+                    <tr class="table-warning">
+                {% endif %}
+                <th scope="row">{{ sorties.nom }}</th>
                 <td>{{ sorties.dateHeureDebut|date('m/d/y')}}</td>
                 <td>{{ sorties.dateLimiteInscription|date('m/d/y') }}</td>
                 <td>{{ sorties.listeDesInscrits | length }}/{{ sorties.nbIncriptionsMax }}</td>
