@@ -92,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank(message="Le numéro de téléphone est requis !", groups={"register"})
      * @Assert\Length (min=10, minMessage="le numero doit être d'au moins 10 chiffres")
      * @Assert\Regex(
-     *     pattern="#^(0|\+33|0033)[1-9]([-. ]?[0-9]{2}){4}$#",
+     *     pattern="#^(0|\+33|0033)[-. ]?[1-9]([-. ]?[0-9]{2}){4}$#",
      *     message="Format de numéro de téléphone invalide",
      *     groups={"register"}
      * )

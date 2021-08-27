@@ -1,14 +1,11 @@
-
-
-
 window.onload = () => {
+    //On récupère notre formulaire
     const FiltersForm = document.querySelector("#searchForm");
 
     // On boucle sur les input
     document.querySelectorAll("#searchForm input, #searchForm select").forEach(input => {
         input.addEventListener("change", () => {
 
-            contrainteChoixDate()
             // On récupère les données du formulaire
             const Form = new FormData(FiltersForm);
 
@@ -30,26 +27,16 @@ window.onload = () => {
             }).then(response =>
                 response.json()
             ).then(data => {
-                // On va chercher la zone de contenu
+                // On va chercher la div contenant les résultats
                 const content = document.querySelector("#content");
 
-                // On remplace le contenu
+                // On remplace le contenu de la div par les résultats de la requête Ajax
                 content.innerHTML = data.content;
 
-                // On met à jour l'url
+                // On met à jour l'url avec les paramètres de recherche
                 history.replaceState({}, null, Url.pathname + "?" + Params.toString());
-            }).catch(e => alert(e));
-
+            }).catch(e => alert("erreur lors de la récupération des résultats"));
         });
     });
 }
 
-/**
- * Permet de restreindre les choix disponible dans un champs date en fonction de la valeur selectionnée dans l'autre
- */
-function contrainteChoixDate() {
-    let dateMin = document.getElementById("recherche_sorties_dateHeureDebutRecherche");
-    let dateMax = document.getElementById("recherche_sorties_dateFinRecherche");
-    dateMax.setAttribute("min", dateMin.value);
-    dateMin.setAttribute("max", dateMax.value);
-}

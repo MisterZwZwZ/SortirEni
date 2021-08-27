@@ -102,7 +102,7 @@ class DefaultController extends AbstractController
                 $booleanSortiesPassees = false;
             }
 
-            // on lance la requête en BDD pour récupérer les données
+            // On appele la fonction du repo avec les paramètres de la requete ajax pour récupérer les données en BDD
             $listeSorties = $entityManager->getRepository(Sorties::class)
                 ->findBySelect($user,
                     $dateDebRech,
