@@ -1,7 +1,8 @@
 # SortirENI
-Here is an event website made with PHP/Symfony at ENI School.
+An event website made with PHP/Symfony at ENI School.
 
 ## What is it ?
+This website aims to allow students to organise and manage various activities. 
 As a logged in user, this web app alows you to :
 - browse events using criterias such as campus, dates, keywords, events that you registered to or created.
 - display details about the event
